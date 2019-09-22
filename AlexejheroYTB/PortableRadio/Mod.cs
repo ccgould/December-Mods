@@ -1,4 +1,4 @@
-﻿namespace MAC.AlexejheroYTB.PortableRadio
+﻿namespace MAC.PortableRadio
 {
     public static class Mod
     {
