@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\GameObjectExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\LanguageHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\QuickLogger.cs" />
   </ItemGroup>
 </Project>

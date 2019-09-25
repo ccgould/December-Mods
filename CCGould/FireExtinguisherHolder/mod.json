@@ -1,0 +1,11 @@
+{
+  "Id": "FireExtinguisherHolder",
+  "DisplayName": "Fire Extinguisher Holder",
+  "Author": "MAC",
+  "Version": "1.0.0",
+  "Enable": true,
+  "AssemblyName": "FireExtinguisherHolder.dll",
+  "EntryMethod": "MAC.CCgould.FireExtinguisherHolder.QPatch.Patch",
+  "Dependencies": [ "SMLHelper" ],
+  "Config": {}
+}

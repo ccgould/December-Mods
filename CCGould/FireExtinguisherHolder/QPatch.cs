@@ -1,10 +1,11 @@
 ﻿using Common.Utilities;
 using Harmony;
-using MAC.CCgould.FireExtinguisherHolder.Buildable;
+using MAC.FireExtinguisherHolder.Buildable;
 using System;
 using System.Reflection;
 
-namespace MAC.CCgould.FireExtinguisherHolder
+
+namespace MAC.FireExtinguisherHolder
 {
     public static class QPatch
     {

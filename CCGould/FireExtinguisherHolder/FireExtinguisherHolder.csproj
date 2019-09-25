@@ -7,7 +7,7 @@
     <ProjectGuid>{893260B0-B246-44FF-B0A3-01C4500332E2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MAC.CCgould.FireExtinguisherHolder</RootNamespace>
+    <RootNamespace>MAC.FireExtinguisherHolder</RootNamespace>
     <AssemblyName>FireExtinguisherHolder</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -65,6 +65,15 @@
     <Compile Include="QPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="mod.json" />
+  </ItemGroup>
   <Import Project="..\Common\Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)bin\$(Configuration)\FireExtinguisherHolder.dll" "F:\Program Files\Epic Games\Subnautica\QMods\FEHolder\" /Y /I</PostBuildEvent>
+  </PropertyGroup>
 </Project>

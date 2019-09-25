@@ -1,11 +1,12 @@
 ﻿using SMLHelper.V2.Handlers;
 
-namespace MAC.CCgould.FireExtinguisherHolder.Buildable
+namespace MAC.FireExtinguisherHolder.Buildable
 {
     internal partial class FEHolderBuildable
     {
-        #region Private Memebers
-        private const string StorageLabelKey = "DD_StorageLabel";
+        #region Private Members
+        private const string OnHandHoverEmptyKey = "MAC_OnHandOverEmpty";
+        private const string OnHandHoverNotEmptyKey = "MAC_OnHandOverNotEmpty";
         #endregion
 
         #region Internal Properties
@@ -19,15 +20,21 @@ namespace MAC.CCgould.FireExtinguisherHolder.Buildable
             BuildableName = this.FriendlyName;
             TechTypeID = this.TechType;
 
-            LanguageHandler.SetLanguageLine(StorageLabelKey, "FCS Deep Driller Receptacle.");
+            LanguageHandler.SetLanguageLine(OnHandHoverEmptyKey, "Click place extinguisher.");
+            LanguageHandler.SetLanguageLine(OnHandHoverNotEmptyKey, "Click remove extinguisher.");
         }
         #endregion
 
         #region Internal Methods
-        internal static string StorageLabel()
+        internal static string OnHandOverEmpty()
         {
-            return Language.main.Get(StorageLabelKey);
+            return Language.main.Get(OnHandHoverEmptyKey);
         }
         #endregion
+
+        internal static string OnHandOverNotEmpty()
+        {
+            return Language.main.Get(OnHandHoverNotEmptyKey);
+        }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using Common.Extensions;
 using Common.Utilities;
-using MAC.CCgould.FireExtinguisherHolder.Mono;
+using MAC.FireExtinguisherHolder.Mono;
 using SMLHelper.V2.Crafting;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace MAC.CCgould.FireExtinguisherHolder.Buildable
+namespace MAC.FireExtinguisherHolder.Buildable
 {
     internal partial class FEHolderBuildable : SMLHelper.V2.Assets.Buildable
     {
@@ -49,15 +49,17 @@ namespace MAC.CCgould.FireExtinguisherHolder.Buildable
 
                 //========== Allows the building animation and material colors ==========// 
 
+
+
                 // Add constructible
                 var constructable = prefab.GetOrAddComponent<Constructable>();
-                constructable.allowedOnWall = false;
-                constructable.allowedOnGround = true;
+                constructable.allowedOnWall = true;
+                constructable.allowedOnGround = false;
                 constructable.allowedInSub = false;
-                constructable.allowedInBase = false;
+                constructable.allowedInBase = true;
                 constructable.allowedOnCeiling = false;
-                constructable.allowedOutside = true;
-                constructable.model = prefab.FindChild("model");
+                constructable.allowedOutside = false;
+                constructable.model = prefab.FindChild("mesh");
                 constructable.techType = TechType;
                 constructable.rotationEnabled = true;
 
