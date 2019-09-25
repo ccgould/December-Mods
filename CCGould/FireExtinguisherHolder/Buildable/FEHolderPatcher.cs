@@ -38,35 +38,13 @@ namespace MAC.FireExtinguisherHolder.Buildable
             {
                 prefab = GameObject.Instantiate<GameObject>(_prefab);
 
-                var meshRenderers = prefab.GetComponentsInChildren<MeshRenderer>();
+                prefab.name = this.PrefabFileName;
 
-                //========== Allows the building animation and material colors ==========// 
-                Shader shader = Shader.Find("MarmosetUBER");
-                Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>(true);
-                SkyApplier skyApplier = prefab.GetOrAddComponent<SkyApplier>();
-                skyApplier.renderers = renderers;
-                skyApplier.anchorSky = Skies.Auto;
+                PrefabIdentifier prefabID = prefab.GetOrAddComponent<PrefabIdentifier>();
+                prefabID.ClassId = this.ClassID;
 
-                //========== Allows the building animation and material colors ==========// 
-
-                // Add constructible
-                var constructable = prefab.GetOrAddComponent<Constructable>();
-                constructable.allowedOnWall = true;
-                constructable.allowedOnGround = false;
-                constructable.allowedInSub = false;
-                constructable.allowedInBase = true;
-                constructable.allowedOnCeiling = false;
-                constructable.allowedOutside = false;
-                constructable.model = prefab.FindChild("model");
-                constructable.techType = TechType;
-                constructable.rotationEnabled = true;
-
-                // Add large world entity ALLOWS YOU TO SAVE ON TERRAIN
-                var lwe = prefab.AddComponent<LargeWorldEntity>();
-                lwe.cellLevel = LargeWorldEntity.CellLevel.Near;
-
-                prefab.AddComponent<PrefabIdentifier>().ClassId = this.ClassID;
-                prefab.AddComponent<FEHolderController>();
+                var techTag = prefab.GetOrAddComponent<TechTag>();
+                techTag.type = TechType;
 
             }
             catch (Exception e)
@@ -75,6 +53,41 @@ namespace MAC.FireExtinguisherHolder.Buildable
             }
 
             return prefab;
+        }
+
+        private void Register()
+        {
+            if (_prefab != null)
+            {
+                var meshRenderers = _prefab.GetComponentsInChildren<MeshRenderer>();
+
+                //========== Allows the building animation and material colors ==========// 
+                Shader shader = Shader.Find("MarmosetUBER");
+                Renderer[] renderers = _prefab.GetComponentsInChildren<Renderer>(true);
+                SkyApplier skyApplier = _prefab.GetOrAddComponent<SkyApplier>();
+                skyApplier.renderers = renderers;
+                skyApplier.anchorSky = Skies.Auto;
+
+                //========== Allows the building animation and material colors ==========// 
+
+                // Add constructible
+                var constructable = _prefab.GetOrAddComponent<Constructable>();
+                constructable.allowedOnWall = true;
+                constructable.allowedOnGround = false;
+                constructable.allowedInSub = QPatch.Configuration.Config.AllowInCyclops;
+                constructable.allowedInBase = true;
+                constructable.allowedOnCeiling = false;
+                constructable.allowedOutside = false;
+                constructable.model = _prefab.FindChild("model");
+                constructable.techType = TechType;
+                constructable.rotationEnabled = true;
+
+                // Add large world entity ALLOWS YOU TO SAVE ON TERRAIN
+                var lwe = _prefab.AddComponent<LargeWorldEntity>();
+                lwe.cellLevel = LargeWorldEntity.CellLevel.Near;
+
+                _prefab.AddComponent<FEHolderController>();
+            }
         }
 
         protected override TechData GetBlueprintRecipe()
@@ -104,7 +117,7 @@ namespace MAC.FireExtinguisherHolder.Buildable
             {
                 throw new FileNotFoundException($"Failed to retrieve the {Singleton.FriendlyName} prefab from the asset bundle");
             }
-
+            Singleton.Register();
             Singleton.Patch();
         }
         #endregion

@@ -1,14 +1,20 @@
 ﻿using Common.Utilities;
 using Harmony;
 using MAC.FireExtinguisherHolder.Buildable;
+using MAC.FireExtinguisherHolder.Config;
+using Oculus.Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Reflection;
 
 
 namespace MAC.FireExtinguisherHolder
 {
+
     public static class QPatch
     {
+        internal static Configuration Configuration { get; set; }
+
         public static void Patch()
         {
             QuickLogger.Info("Started patching. Version: " + QuickLogger.GetAssemblyVersion());
@@ -20,6 +26,8 @@ namespace MAC.FireExtinguisherHolder
 
             try
             {
+                LoadConfiguration();
+
                 FEHolderBuildable.PatchHelper();
 
                 var harmony = HarmonyInstance.Create("com.fireextinguishergholder.MAC");
@@ -32,6 +40,18 @@ namespace MAC.FireExtinguisherHolder
             {
                 QuickLogger.Error(ex);
             }
+        }
+
+        private static void LoadConfiguration()
+        {
+            // == Load Configuration == //
+            string configJson = File.ReadAllText(Mod.ConfigurationFile().Trim());
+
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.MissingMemberHandling = MissingMemberHandling.Ignore;
+
+            //LoadData
+            Configuration = JsonConvert.DeserializeObject<Configuration>(configJson, settings);
         }
     }
 }

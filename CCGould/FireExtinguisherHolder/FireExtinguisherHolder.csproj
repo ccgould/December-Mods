@@ -61,17 +61,19 @@
     <Compile Include="Buildable\FEHolderAuxPatcher.cs" />
     <Compile Include="Buildable\FEHolderModelPrefab.cs" />
     <Compile Include="Buildable\FEHolderPatcher.cs" />
+    <Compile Include="Config\Configuration.cs" />
     <Compile Include="Config\FEHolderSaveDataEntry.cs" />
     <Compile Include="Config\Mod.cs" />
     <Compile Include="Mono\FEHolderController.cs" />
     <Compile Include="QPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="mod.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\FEHolder.png" />
   </ItemGroup>
   <Import Project="..\Common\Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

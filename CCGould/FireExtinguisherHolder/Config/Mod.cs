@@ -24,6 +24,8 @@ namespace MAC.FireExtinguisherHolder.Config
 
         internal const string SaveDataFilename = "FEHolderSaveData.json";
 
+        internal static string MODFOLDERLOCATION => GetModPath();
+
         internal static event Action<FEHolderSaveData> OnDataLoaded;
         #endregion
 
@@ -57,16 +59,6 @@ namespace MAC.FireExtinguisherHolder.Config
         internal static void OnSaveComplete()
         {
             _saveObject.StartCoroutine(SaveCoroutine());
-        }
-
-        private static IEnumerator SaveCoroutine()
-        {
-            while (SaveLoadManager.main != null && SaveLoadManager.main.isSaving)
-            {
-                yield return null;
-            }
-            GameObject.DestroyImmediate(_saveObject.gameObject);
-            _saveObject = null;
         }
 
         internal static string GetSaveFileDirectory()
@@ -105,6 +97,32 @@ namespace MAC.FireExtinguisherHolder.Config
                 QuickLogger.Info("Save Data Loaded");
                 OnDataLoaded?.Invoke(_fEHolderSaveData);
             });
+        }
+
+        internal static string ConfigurationFile()
+        {
+            return Path.Combine(MODFOLDERLOCATION, "mod.json");
+        }
+        #endregion
+
+        #region Private Methods
+        private static IEnumerator SaveCoroutine()
+        {
+            while (SaveLoadManager.main != null && SaveLoadManager.main.isSaving)
+            {
+                yield return null;
+            }
+            GameObject.DestroyImmediate(_saveObject.gameObject);
+            _saveObject = null;
+        }
+
+        private static string GetModPath()
+        {
+            return Path.Combine(GetQModsPath(), ModName);
+        }
+        private static string GetQModsPath()
+        {
+            return Path.Combine(Environment.CurrentDirectory, "QMods");
         }
         #endregion
 
