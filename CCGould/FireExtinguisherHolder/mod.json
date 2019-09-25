@@ -9,6 +9,6 @@
   "Dependencies": [ "SMLHelper" ],
   "Config": 
   {
-    "AllowInCyclops": true
+    "AllowInCyclops": false
   }
 }
