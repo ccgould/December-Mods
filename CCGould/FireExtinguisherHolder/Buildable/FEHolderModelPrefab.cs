@@ -30,7 +30,7 @@ namespace MAC.FireExtinguisherHolder.Buildable
             if (prefab != null)
             {
                 // Scale
-                prefab.transform.localScale *= 2f;
+                //prefab.transform.localScale *= 2f;
                 ApplyShaders(prefab, assetBundle);
                 _prefab = prefab;
 
@@ -58,6 +58,8 @@ namespace MAC.FireExtinguisherHolder.Buildable
             MaterialHelpers.ApplyEmissionShader("fire_extinguisher_01", "fire_extinguisher_01_illum", prefab, bundle, Color.white);
             MaterialHelpers.ApplyNormalShader("fire_extinguisher_01", "fire_extinguisher_01_normal", prefab, bundle);
             #endregion
+
+            QuickLogger.Debug("All Materials have shaders");
         }
     }
 }

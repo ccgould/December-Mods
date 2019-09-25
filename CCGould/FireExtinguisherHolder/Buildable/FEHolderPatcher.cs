@@ -42,7 +42,7 @@ namespace MAC.FireExtinguisherHolder.Buildable
 
                 //========== Allows the building animation and material colors ==========// 
                 Shader shader = Shader.Find("MarmosetUBER");
-                Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
+                Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>(true);
                 SkyApplier skyApplier = prefab.GetOrAddComponent<SkyApplier>();
                 skyApplier.renderers = renderers;
                 skyApplier.anchorSky = Skies.Auto;

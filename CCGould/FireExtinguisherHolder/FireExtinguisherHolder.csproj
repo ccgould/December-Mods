@@ -61,6 +61,7 @@
     <Compile Include="Buildable\FEHolderAuxPatcher.cs" />
     <Compile Include="Buildable\FEHolderModelPrefab.cs" />
     <Compile Include="Buildable\FEHolderPatcher.cs" />
+    <Compile Include="Config\FEHolderSaveDataEntry.cs" />
     <Compile Include="Config\Mod.cs" />
     <Compile Include="Mono\FEHolderController.cs" />
     <Compile Include="QPatch.cs" />
