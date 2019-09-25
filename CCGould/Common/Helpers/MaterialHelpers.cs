@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Common.Helpers
 {
+    /// <summary>
+    /// A class that helps with applying the shader to the materials on a prefab
+    /// </summary>
     public class MaterialHelpers
     {
         /// <summary>
@@ -132,6 +135,11 @@ namespace Common.Helpers
             }
         }
 
+        /// <summary>
+        /// Removes (Instance) from a string
+        /// </summary>
+        /// <param name="name">Name of the material to remove (Instance) from.</param>
+        /// <returns></returns>
         private static string RemoveInstance(string name)
         {
             return name.Replace("(Instance)", String.Empty).Trim();

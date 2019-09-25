@@ -106,25 +106,6 @@ namespace MAC.FireExtinguisherHolder.Buildable
             }
 
             Singleton.Patch();
-
-            LoadConfig();
-
-        }
-        #endregion
-
-        #region Private Methods
-        /// <summary>
-        /// Loads the config for the mod
-        /// </summary>
-        private static void LoadConfig()
-        {
-            //string savedDataJson = File.ReadAllText(Path.Combine(AssetHelper.GetConfigFolder(Mod.ModName), $"{Singleton.ClassID}.json")).Trim();
-
-            //var jsonSerializerSettings = new JsonSerializerSettings();
-            //jsonSerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
-
-            //DeepDrillConfig = JsonConvert.DeserializeObject<DeepDrillerCfg>(savedDataJson, jsonSerializerSettings);
-            //DeepDrillConfig.Convert();
         }
         #endregion
     }

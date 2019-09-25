@@ -9,6 +9,10 @@ namespace MAC.FireExtinguisherHolder.Buildable
     {
         private GameObject _prefab;
 
+        /// <summary>
+        /// Gets the prefabs from the bundle
+        /// </summary>
+        /// <returns></returns>
         private bool GetPrefabs()
         {
             QuickLogger.Debug("GetPrefabs");
@@ -29,8 +33,6 @@ namespace MAC.FireExtinguisherHolder.Buildable
             //If the prefab isn't null lets add the shader to the materials
             if (prefab != null)
             {
-                // Scale
-                //prefab.transform.localScale *= 2f;
                 ApplyShaders(prefab, assetBundle);
                 _prefab = prefab;
 
@@ -45,6 +47,11 @@ namespace MAC.FireExtinguisherHolder.Buildable
             return true;
         }
 
+        /// <summary>
+        /// Applies the shader needed for the materials to a prefab
+        /// </summary>
+        /// <param name="prefab">The prefab to apply the shaders to.</param>
+        /// <param name="bundle">The bundle to search in for the needed textures</param>
         internal static void ApplyShaders(GameObject prefab, AssetBundle bundle)
         {
             #region fire_extinguisher_01_holder
@@ -58,8 +65,6 @@ namespace MAC.FireExtinguisherHolder.Buildable
             MaterialHelpers.ApplyEmissionShader("fire_extinguisher_01", "fire_extinguisher_01_illum", prefab, bundle, Color.white);
             MaterialHelpers.ApplyNormalShader("fire_extinguisher_01", "fire_extinguisher_01_normal", prefab, bundle);
             #endregion
-
-            QuickLogger.Debug("All Materials have shaders");
         }
     }
 }

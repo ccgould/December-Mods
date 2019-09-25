@@ -8,16 +8,26 @@ using UnityEngine;
 
 namespace MAC.FireExtinguisherHolder.Config
 {
+    /// <summary>
+    /// A class the handles all mod customization, standard information and loading.
+    /// </summary>
     internal static class Mod
     {
+        #region Private Members
         private static ModSaver _saveObject;
         private static FEHolderSaveData _fEHolderSaveData;
+        #endregion
+
+        #region Internal Properties
         internal static string ModName => "FEHolder";
         internal static string BundleName => "feholdermodbundle";
 
         internal const string SaveDataFilename = "FEHolderSaveData.json";
 
         internal static event Action<FEHolderSaveData> OnDataLoaded;
+        #endregion
+
+        #region Internal Methods
         internal static void Save()
         {
             if (!IsSaving())
@@ -44,7 +54,7 @@ namespace MAC.FireExtinguisherHolder.Config
             return _saveObject != null;
         }
 
-        public static void OnSaveComplete()
+        internal static void OnSaveComplete()
         {
             _saveObject.StartCoroutine(SaveCoroutine());
         }
@@ -59,13 +69,9 @@ namespace MAC.FireExtinguisherHolder.Config
             _saveObject = null;
         }
 
-        public static string GetSaveFileDirectory()
+        internal static string GetSaveFileDirectory()
         {
             return Path.Combine(SaveUtils.GetCurrentSaveDataDir(), ModName);
-        }
-
-        public class ModSaver : MonoBehaviour
-        {
         }
 
         internal static FEHolderSaveDataEntry GetSaveData(string id)
@@ -90,7 +96,7 @@ namespace MAC.FireExtinguisherHolder.Config
             return _fEHolderSaveData ?? new FEHolderSaveData();
         }
 
-        public static void LoadData()
+        internal static void LoadData()
         {
             QuickLogger.Info("Loading Save Data...");
             ModUtils.LoadSaveData<FEHolderSaveData>(SaveDataFilename, GetSaveFileDirectory(), (data) =>
@@ -100,5 +106,10 @@ namespace MAC.FireExtinguisherHolder.Config
                 OnDataLoaded?.Invoke(_fEHolderSaveData);
             });
         }
+        #endregion
+
+        #region Internal Classes
+        internal class ModSaver : MonoBehaviour { }
+        #endregion
     }
 }

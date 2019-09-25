@@ -2,7 +2,6 @@
 using Common.Utilities;
 using MAC.FireExtinguisherHolder.Buildable;
 using MAC.FireExtinguisherHolder.Config;
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,27 +10,32 @@ namespace MAC.FireExtinguisherHolder.Mono
 {
     internal class FEHolderController : HandTarget, IHandTarget, IConstructable, IProtoEventListener
     {
+        #region Private Members   
         private GameObject _tankMesh;
         private bool _initialized;
         private bool _hasTank = false;
         private float _fuel = 100f;
         private FEHolderSaveDataEntry _saveData;
+        #endregion
 
-        internal bool IsConstructed { get; set; }
+        #region Internal Properties
+        internal bool IsConstructed { get; private set; }
 
+        #endregion
+
+        #region IHandTarget
         public void OnHandHover(GUIHand hand)
         {
             HandReticle main = HandReticle.main;
-            QuickLogger.Debug($"Fuel: {_fuel} || HasTank = {_hasTank}", true);
+
             if (!_hasTank)
             {
                 main.SetInteractText(LanguageHelpers.GetLanguage(FEHolderBuildable.OnHandOverEmpty()));
             }
             else
             {
-                main.SetInteractText(LanguageHelpers.GetLanguage(FEHolderBuildable.OnHandOverNotEmpty()), $"Fire Extinguisher: {_fuel}");
+                main.SetInteractText(LanguageHelpers.GetLanguage(FEHolderBuildable.OnHandOverNotEmpty()), $"Fire Extinguisher: {Mathf.RoundToInt(_fuel)}%");
             }
-
 
             main.SetIcon(HandReticle.IconType.Hand, 1f);
         }
@@ -47,7 +51,12 @@ namespace MAC.FireExtinguisherHolder.Mono
                 TryStoreTank();
             }
         }
+        #endregion
 
+        #region Private Methods 
+        /// <summary>
+        /// A method that takes the tank from the player and stores it in the holder.
+        /// </summary>
         private void TryStoreTank()
         {
             Pickupable pickupable = Inventory.main.container.RemoveItem(TechType.FireExtinguisher);
@@ -64,6 +73,9 @@ namespace MAC.FireExtinguisherHolder.Mono
             }
         }
 
+        /// <summary>
+        /// A method that takes the tank from holder and gives it to the player.
+        /// </summary>
         private void TakeTank()
         {
             GameObject gameObject = CraftData.AddToInventory(TechType.FireExtinguisher, 1, false, false);
@@ -75,13 +87,18 @@ namespace MAC.FireExtinguisherHolder.Mono
             }
         }
 
+        /// <summary>
+        /// Finds all the gameObjects in the prefab for use
+        /// </summary>
+        /// <returns></returns>
         private bool FindComponents()
         {
-            var tank = gameObject.FindChild("model").FindChild("fire_extinguisher_tube_01");
+            var objectName = "fire_extinguisher_tube_01";
+            var tank = gameObject.FindChild("model").FindChild(objectName);
 
             if (tank == null)
             {
-                QuickLogger.Error($"Cant find fire_extinguisher_tube_01 on the prefab");
+                QuickLogger.Error($"Cant find {objectName} on the prefab");
                 return false;
             }
 
@@ -89,9 +106,33 @@ namespace MAC.FireExtinguisherHolder.Mono
             return true;
         }
 
+        /// <summary>
+        /// Tries to display tank on load.
+        /// </summary>
+        /// <param name="data">Save data</param>
+        /// <returns></returns>
+        private IEnumerator ShowTank(FEHolderSaveDataEntry data)
+        {
+            if (!data.HasTank) yield break;
+
+            while (!_tankMesh.activeSelf)
+            {
+                _tankMesh.SetActive(true);
+                yield return null;
+            }
+        }
+        #endregion
+
+        #region IConstructable
         public bool CanDeconstruct(out string reason)
         {
-            reason = String.Empty;
+            if (_hasTank)
+            {
+                reason = FEHolderBuildable.HolderNotEmptyMessage();
+                return false;
+            }
+
+            reason = string.Empty;
             return true;
         }
 
@@ -115,7 +156,9 @@ namespace MAC.FireExtinguisherHolder.Mono
 
             }
         }
+        #endregion
 
+        #region IProtoEventListener
         internal void Save(FEHolderSaveData saveDataList)
         {
             var prefabIdentifier = GetComponent<PrefabIdentifier>();
@@ -153,7 +196,6 @@ namespace MAC.FireExtinguisherHolder.Mono
 
             _fuel = data.Fuel;
             _hasTank = data.HasTank;
-            QuickLogger.Debug($"Loaded Fuel: {data.Fuel} || HasTank = {data.HasTank}");
 
             if (_tankMesh != null)
             {
@@ -164,19 +206,7 @@ namespace MAC.FireExtinguisherHolder.Mono
                 QuickLogger.Error("Tank Mesh Not Found");
             }
             QuickLogger.Info("Loaded FEExtinguishers");
-            QuickLogger.Debug($"Fuel: {_fuel} || HasTank = {_hasTank}");
         }
-
-        private IEnumerator ShowTank(FEHolderSaveDataEntry data)
-        {
-            if (!data.HasTank) yield break;
-
-            while (!_tankMesh.activeSelf)
-            {
-                QuickLogger.Debug("Trying to show Tank");
-                _tankMesh.SetActive(true);
-                yield return null;
-            }
-        }
+        #endregion
     }
 }
