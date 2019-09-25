@@ -49,8 +49,6 @@ namespace MAC.FireExtinguisherHolder.Buildable
 
                 //========== Allows the building animation and material colors ==========// 
 
-
-
                 // Add constructible
                 var constructable = prefab.GetOrAddComponent<Constructable>();
                 constructable.allowedOnWall = true;
@@ -59,7 +57,7 @@ namespace MAC.FireExtinguisherHolder.Buildable
                 constructable.allowedInBase = true;
                 constructable.allowedOnCeiling = false;
                 constructable.allowedOutside = false;
-                constructable.model = prefab.FindChild("mesh");
+                constructable.model = prefab.FindChild("model");
                 constructable.techType = TechType;
                 constructable.rotationEnabled = true;
 
