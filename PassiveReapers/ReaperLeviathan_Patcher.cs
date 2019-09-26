@@ -17,24 +17,4 @@ namespace MAC.PassiveReapers {
         }
     }
 
-    //[HarmonyPatch(typeof(ReaperLeviathan))]
-    //[HarmonyPatch("GrabSeamoth")]
-    //internal class ReaperLeviathan_GrabSeamoth_Patch {
-    //    [HarmonyPrefix]
-    //    public static bool Prefix(ReaperLeviathan __instance)
-    //    {
-    //        return false;
-    //    }
-    //}
-
-    //[HarmonyPatch(typeof(ReaperLeviathan))]
-    //[HarmonyPatch("GrabExosuit")]
-    //internal class ReaperLeviathan_GrabExosuit_Patch {
-    //    [HarmonyPrefix]
-    //    public static bool Prefix(ReaperLeviathan __instance)
-    //    {
-    //        return false;
-    //    }
-    //}
-
 }
