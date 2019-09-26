@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PassiveReapers")]
+[assembly: AssemblyTitle("WarpShield")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PassiveReapers")]
+[assembly: AssemblyProduct("WarpShield")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4f5466d3-0c6f-4251-bf51-da04149e148a")]
+[assembly: Guid("e9bd5fd5-eee7-44e6-a739-ace8f2e7d8ca")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,12 +1,11 @@
 ﻿using Harmony;
-using System;
 using System.Reflection;
 
-namespace MAC.PassiveReapers {
+namespace MAC.WarpShield {
     public class MainPatcher {
         public static void Patch()
         {
-            var harmony = HarmonyInstance.Create("com.oldark.subnautica.passivereapers.mod");
+            var harmony = HarmonyInstance.Create("com.oldark.subnautica.warpshield.mod");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
     }
