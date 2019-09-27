@@ -56,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Patches\Exosuit_Patcher.cs" />
-    <Compile Include="Modules\ExsoSuitModule.cs" />
     <Compile Include="Patches\MainPatcher.cs" />
     <Compile Include="Modules\ExoSuitWarpShieldModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -8,32 +8,54 @@ using SMLHelper.V2.Assets;
 using UnityEngine;
 
 namespace MAC.WarpShield {
-    public class ExoSuitWarpShieldModule : ExoSuitModule {
-        public ExoSuitWarpShieldModule() :
-            base("ExoSuitWarpShieldModule",
-                "Exosuit Phasic Stabilizer",
-                "Prevents being forced out of your vehicle via teleportation.",
-                CraftTree.Type.SeamothUpgrades,
-                new string[1] { "ExosuitModules" },
-                TechType.None,
-                TechType.ExosuitThermalReactorModule)
+    public class ExoSuitWarpShieldModule : Craftable {
+
+        private static readonly ExoSuitWarpShieldModule main = new ExoSuitWarpShieldModule();
+
+        internal static TechType TechTypeID { get; private set; }
+
+        public ExoSuitWarpShieldModule(): base("ExosuitWarpShieldModule", "Exosuit Phasic Stabilizer", "Stabilizes reality in the vicinity, preventing most forms of teleportion.")
         {
-            ExoSuitWarpShieldModule = TechType;
+            OnFinishedPatching += AdditionalPatching;
         }
 
-        public override TechData GetTechData()
+        public override CraftTree.Type FabricatorType { get; } = CraftTree.Type.SeamothUpgrades;
+        public override TechGroup GroupForPDA { get; } = TechGroup.VehicleUpgrades;
+        public override TechCategory CategoryForPDA { get; } = TechCategory.VehicleUpgrades;
+        public override string AssetsFolder { get; } = "WarpShield/Assets";
+        public override string[] StepsToFabricatorTab { get; } = new[] { "ExosuitModules" };
+        public override TechType RequiredForUnlock { get; } = TechType.None;
+
+        public override GameObject GetGameObject()
         {
-            return new TechData()
+            GameObject prefab = CraftData.GetPrefabForTechType(TechType.ExosuitThermalReactorModule);
+            return GameObject.Instantiate(prefab);
+            
+        }
+
+        protected override TechData GetBlueprintRecipe()
+        {
+            return new TechData
             {
                 craftAmount = 1,
-                Ingredients = new List<Ingredient>()
+                Ingredients =
                 {
                     new Ingredient(TechType.Diamond, 3),
                     new Ingredient(TechType.AdvancedWiringKit, 1),
                     new Ingredient(TechType.Polyaniline, 1)
                 }
             };
+        }
 
+        public static void PatchSMLHelper()
+        {
+            main.Patch();
+        }
+
+        private void AdditionalPatching()
+        {
+            TechTypeID = this.TechType;
+            CraftDataHandler.SetEquipmentType(this.TechType, EquipmentType.ExosuitModule);
         }
     }
 }

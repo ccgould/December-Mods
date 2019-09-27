@@ -13,7 +13,7 @@ namespace MAC.WarpShield {
         [HarmonyPostfix]
         static void PostFix(Exosuit __instance, TechType techType)
         {
-            int count = __instance.modules.GetCount(ExoSuitModule.ExoSuitWarpShieldModule);
+            int count = __instance.modules.GetCount(ExoSuitWarpShieldModule.TechTypeID);
             if (count > 0)
             {
                 MainPatcher.isPrawnWarpShielded = true;

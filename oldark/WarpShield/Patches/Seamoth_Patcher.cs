@@ -13,7 +13,7 @@ namespace MAC.WarpShield {
         [HarmonyPostfix]
         static void PostFix(SeaMoth __instance, TechType techType)
         {
-            int count = __instance.modules.GetCount(SeamothModule.SeamothWarpShieldModule);
+            int count = __instance.modules.GetCount(SeamothWarpShieldModule.TechTypeID);
             if(count > 0)
             {
                 MainPatcher.isSeamothWarpShielded = true;

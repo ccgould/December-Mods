@@ -15,10 +15,15 @@ namespace MAC.WarpShield {
         {
             Player component = target.GetComponent<Player>();
 
-            if (MainPatcher.isSeamothWarpShielded && component != null && component.GetMode() == Player.Mode.LockedPiloting && component.GetVehicle() != null)
+            if (MainPatcher.isSeamothWarpShielded && component != null && component.GetMode() == Player.Mode.LockedPiloting && component.GetVehicle() != null && component.GetVehicle().vehicleName.Equals("SEAMOTH"))
             {
                 return false;
             }
+            else if (MainPatcher.isPrawnWarpShielded && component != null && component.GetMode() == Player.Mode.LockedPiloting && component.GetVehicle() != null && component.GetVehicle().vehicleName.Equals("PRAWN SUIT"))
+            {
+                 return false;
+            }
+
             return true;
         }
     }
