@@ -1,0 +1,11 @@
+﻿{
+  "Id": "WarpShield",
+  "DisplayName": "Warp Shield",
+  "Author": "Modding Advent Calendar 2019",
+  "Version": "1.0",
+  "Requires": [],
+  "Enable": true,
+  "AssemblyName": "WarpShield.dll",
+  "EntryMethod": "MAC.WarpShield.MainPatcher.Patch",
+  "Config": {}
+}
