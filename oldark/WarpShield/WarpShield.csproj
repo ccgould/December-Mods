@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>e9bd5fd5-eee7-44e6-a739-ace8f2e7d8ca</ProjectGuid>
+    <ProjectGuid>8cbaf80f-5404-458c-a5bb-040d4096fdb8</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WarpShield</RootNamespace>

@@ -6,7 +6,7 @@ using Harmony;
 using UnityEngine;
 
 namespace MAC.WarpShield {
-    
+
     [HarmonyPatch(typeof(WarpBall))]
     [HarmonyPatch("Warp")]
     internal class WarpBall_Warp_Patch {
