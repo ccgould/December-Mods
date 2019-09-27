@@ -11,8 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Common", "Common\Common.shproj", "{FC1E64BF-C119-4C16-9246-A8578C702ABB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utility Mods", "Utility Mods", "{0D585BB8-6C8B-4D73-B9DB-A3C470522555}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OxStation", "OxStation\OxStation.csproj", "{2AF5E457-E1AF-4BEF-9681-D8138517765E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Common\Common.projitems*{2af5e457-e1af-4bef-9681-d8138517765e}*SharedItemsImports = 4
 		Common\Common.projitems*{893260b0-b246-44ff-b0a3-01c4500332e2}*SharedItemsImports = 4
 		Common\Common.projitems*{fc1e64bf-c119-4c16-9246-a8578c702abb}*SharedItemsImports = 13
 	EndGlobalSection
@@ -25,6 +30,10 @@ Global
 		{893260B0-B246-44FF-B0A3-01C4500332E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{893260B0-B246-44FF-B0A3-01C4500332E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{893260B0-B246-44FF-B0A3-01C4500332E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AF5E457-E1AF-4BEF-9681-D8138517765E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AF5E457-E1AF-4BEF-9681-D8138517765E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AF5E457-E1AF-4BEF-9681-D8138517765E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AF5E457-E1AF-4BEF-9681-D8138517765E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +41,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{893260B0-B246-44FF-B0A3-01C4500332E2} = {4340CD0C-98B6-4C3F-8B90-7B8AD1A2D9F7}
 		{FC1E64BF-C119-4C16-9246-A8578C702ABB} = {EC6ED7A7-B75C-4D5B-B297-3F9905354C95}
+		{2AF5E457-E1AF-4BEF-9681-D8138517765E} = {0D585BB8-6C8B-4D73-B9DB-A3C470522555}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB0ABA49-C20D-43A7-89F0-F935AEDDB56F}

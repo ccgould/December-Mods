@@ -1,4 +1,4 @@
-﻿using MAC.FireExtinguisherHolder.Config;
+﻿using MAC.OxStation.Config;
 using Oculus.Newtonsoft.Json;
 using System;
 using System.Collections;
