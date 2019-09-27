@@ -8,7 +8,7 @@ namespace MAC.WarpShield {
     public class SeamothWarpShieldModule : SeamothModule {
         public SeamothWarpShieldModule() :
             base("SeamothWarpShieldModule",
-                "Seamoth Warp Shield",
+                "Seamoth Phasic Stabilizer",
                 "Prevents being forced out of your vehicle via teleportation.",
                 CraftTree.Type.SeamothUpgrades,
                 new string[1] { "SeamothModules" },

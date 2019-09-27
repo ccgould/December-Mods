@@ -8,6 +8,7 @@ namespace MAC.WarpShield {
     public class MainPatcher {
 
         public static bool isSeamothWarpShielded = false;
+        public static bool isPrawnWarpShielded = false;
 
         public static void Patch()
         {
@@ -15,6 +16,7 @@ namespace MAC.WarpShield {
             harmony.PatchAll(Assembly.GetExecutingAssembly());
 
             PrefabHandler.RegisterPrefab(new SeamothWarpShieldModule());
+            PrefabHandler.RegisterPrefab(new ExoSuitWarpShieldModule());
         }
     }
 }
