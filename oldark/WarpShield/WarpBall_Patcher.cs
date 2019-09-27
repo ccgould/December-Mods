@@ -14,7 +14,8 @@ namespace MAC.WarpShield {
         public static bool Prefix(WarpBall __instance, GameObject target, Vector3 position)
         {
             Player component = target.GetComponent<Player>();
-            if(component != null && component.GetMode() == Player.Mode.LockedPiloting && component.GetVehicle() != null)
+
+            if (MainPatcher.isSeamothWarpShielded && component != null && component.GetMode() == Player.Mode.LockedPiloting && component.GetVehicle() != null)
             {
                 return false;
             }
