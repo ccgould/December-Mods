@@ -15,7 +15,7 @@ namespace MAC.WarpShield {
                 "Prevents being forced out of your vehicle via teleportation.",
                 CraftTree.Type.SeamothUpgrades,
                 new string[1] { "ExosuitModules" },
-                TechType.ExosuitThermalReactorModule,
+                TechType.None,
                 TechType.ExosuitThermalReactorModule)
         {
             ExoSuitWarpShieldModule = TechType;
