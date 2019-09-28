@@ -67,8 +67,12 @@
     <Compile Include="Config\Configuration.cs" />
     <Compile Include="Config\Mod.cs" />
     <Compile Include="Config\SaveDataEntry.cs" />
+    <Compile Include="Display\InterfaceButton.cs" />
+    <Compile Include="Display\OnScreenButton.cs" />
     <Compile Include="Managers\AnimationManager.cs" />
+    <Compile Include="Managers\AudioManager.cs" />
     <Compile Include="Managers\BaseManager.cs" />
+    <Compile Include="Managers\DisplayManager.cs" />
     <Compile Include="Managers\HealthManager.cs" />
     <Compile Include="Managers\Ox_OxygenManager.cs" />
     <Compile Include="Managers\PowerManager.cs" />

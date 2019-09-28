@@ -19,6 +19,8 @@ namespace MAC.OxStation.Mono
         internal PowerManager PowerManager { get; private set; }
         internal HealthManager HealthManager { get; private set; }
         internal AnimationManager AnimationManager { get; private set; }
+        internal Managers.DisplayManager DisplayManager { get; private set; }
+        internal AudioManager AudioManager;
         internal int IsRunningHash { get; set; }
 
         private void Initialize()
@@ -28,7 +30,7 @@ namespace MAC.OxStation.Mono
                 OxygenManager = new Ox_OxygenManager();
                 OxygenManager.SetAmountPerSecond(QPatch.Configuration.Config.OxygenPerSecond);
                 OxygenManager.Initialize(this);
-                //StartCoroutine(GenerateOxygen());
+                StartCoroutine(GenerateOxygen());
             }
 
             if (PowerManager == null)
@@ -49,6 +51,12 @@ namespace MAC.OxStation.Mono
                 StartCoroutine(HealthCheck());
             }
 
+            if (AudioManager == null)
+            {
+                AudioManager = new AudioManager(gameObject.GetComponent<FMOD_CustomLoopingEmitter>());
+                InvokeRepeating("UpdateAudio", 0, 1);
+            }
+
             AnimationManager = gameObject.GetComponent<AnimationManager>();
             IsRunningHash = Animator.StringToHash("IsRunning");
 
@@ -58,6 +66,7 @@ namespace MAC.OxStation.Mono
             }
 
             var playerInterationManager = gameObject.GetComponent<PlayerInteractionManager>();
+
             if (playerInterationManager != null)
             {
                 playerInterationManager.Initialize(this);
@@ -109,7 +118,7 @@ namespace MAC.OxStation.Mono
         private void Update()
         {
             HealthManager?.UpdateHealthSystem();
-            OxygenManager?.GenerateOxygen();
+            PowerManager?.UpdatePower();
         }
 
         internal void AddToBaseManager(BaseManager managers = null)
@@ -156,13 +165,27 @@ namespace MAC.OxStation.Mono
             if (constructed)
             {
                 Initialize();
-                QuickLogger.Debug("1");
                 AddToBaseManager();
-                QuickLogger.Debug("2");
                 AnimationManager.SetBoolHash(IsRunningHash, true);
-                QuickLogger.Debug("3");
 
+                if (DisplayManager == null)
+                {
+                    DisplayManager = gameObject.AddComponent<Managers.DisplayManager>();
+                    DisplayManager.Setup(this);
+                }
             }
+        }
+
+        private void UpdateAudio()
+        {
+            if (!IsConstructed || PowerManager == null || AudioManager == null) return;
+
+            if (IsConstructed && PowerManager.GetPowerState() == PowerStates.Powered)
+            {
+                AudioManager.PlayMachineAudio();
+                return;
+            }
+            AudioManager.StopMachineAudio();
         }
 
         private void OnDestroy()
@@ -170,6 +193,7 @@ namespace MAC.OxStation.Mono
             StopCoroutine(UpdatePowerState());
             StopCoroutine(GenerateOxygen());
             StopCoroutine(HealthCheck());
+            CancelInvoke("UpdateAudio");
             BaseManager.RemoveBaseUnit(this);
         }
     }

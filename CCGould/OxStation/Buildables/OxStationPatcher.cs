@@ -24,7 +24,7 @@ namespace MAC.OxStation.Buildables
         #endregion
 
         #region Contructor
-        public OxStationBuildable() : base("OxStation", "OxStation", "A oxygen producing unity for your habitat.")
+        public OxStationBuildable() : base("OxStation", "OxStation", "A oxygen producing unit for your habitat.")
         {
             OnFinishedPatching += AdditionalPatching;
         }
@@ -80,7 +80,7 @@ namespace MAC.OxStation.Buildables
                 constructable.allowedOnWall = false;
                 constructable.allowedOnGround = true;
                 constructable.allowedInSub = false;
-                constructable.allowedInBase = false;
+                constructable.allowedInBase = true;
                 constructable.allowedOnCeiling = false;
                 constructable.allowedOutside = true;
                 constructable.model = _prefab.FindChild("model");
@@ -92,6 +92,7 @@ namespace MAC.OxStation.Buildables
                 lwe.cellLevel = LargeWorldEntity.CellLevel.Global;
 
                 _prefab.AddComponent<PlayerInteractionManager>();
+                _prefab.AddComponent<FMOD_CustomLoopingEmitter>();
             }
         }
 

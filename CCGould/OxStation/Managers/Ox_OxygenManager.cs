@@ -78,5 +78,42 @@ namespace MAC.OxStation.Managers
         {
             return _amountPerSecond;
         }
+
+        public void GivePlayerO2()
+        {
+            if (_o2Level <= 0) return;
+
+            var o2Manager = Player.main.oxygenMgr;
+
+            var playerO2Request = o2Manager.GetOxygenCapacity() - o2Manager.GetOxygenAvailable();
+
+            QuickLogger.Debug($"Taking: {playerO2Request}", true);
+
+            if (_o2Level >= playerO2Request)
+            {
+                _o2Level -= playerO2Request;
+                o2Manager.AddOxygen(Mathf.Abs(playerO2Request));
+                QuickLogger.Debug($"O2 Level: {_o2Level} || Tank Level {playerO2Request}", true);
+
+                return;
+            }
+
+            var playerO2RequestRemainder = Mathf.Min(_o2Level, playerO2Request);
+            _o2Level -= playerO2RequestRemainder;
+            o2Manager.AddOxygen(Mathf.Abs(playerO2RequestRemainder));
+            QuickLogger.Debug($"O2 Level: {_o2Level} || Tank Level {playerO2RequestRemainder}", true);
+
+            //var modified = -Mathf.Min(-playerO2Request, _o2Level);
+        }
+
+        internal int GetO2LevelPercentageFull()
+        {
+            return Mathf.RoundToInt((100 * _o2Level) / _tankCapacity);
+        }
+
+        internal float GetO2LevelPercentage()
+        {
+            return _o2Level / _tankCapacity;
+        }
     }
 }

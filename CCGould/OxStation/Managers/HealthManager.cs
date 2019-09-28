@@ -34,14 +34,14 @@ namespace MAC.OxStation.Managers
 
             if (_mono.PowerManager?.GetPowerState() != PowerStates.Powered)
             {
-                QuickLogger.Debug("Not Damaging Unit");
+                //QuickLogger.Debug("Not Damaging Unit");
                 ResetPassedTime();
                 return;
             }
 
             if (_passedTime >= _damagePerSecond)
             {
-                QuickLogger.Debug("Damaging Unit");
+                //QuickLogger.Debug("Damaging Unit");
                 ApplyDamage();
                 ResetPassedTime();
             }
@@ -57,6 +57,16 @@ namespace MAC.OxStation.Managers
         internal float GetHealth()
         {
             return _liveMixin.health;
+        }
+
+        internal int GetHealthPercentageFull()
+        {
+            return Mathf.RoundToInt((100 * GetHealth()) / _liveMixin.maxHealth);
+        }
+
+        internal float GetHealthPercentage()
+        {
+            return GetHealth() / _liveMixin.maxHealth;
         }
 
         internal void SetHealth(float health)

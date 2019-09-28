@@ -4,8 +4,10 @@ namespace MAC.OxStation.Config
 {
     public class Config
     {
+        public bool PlaySFX;
         public float TankCapacity { get; set; }
         public float OxygenPerSecond { get; set; }
+        public float EnergyPerSec { get; set; }
     }
 
     public class Configuration

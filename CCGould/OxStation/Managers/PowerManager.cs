@@ -2,6 +2,7 @@
 using Common.Utilities;
 using MAC.OxStation.Mono;
 using System;
+using UnityEngine;
 
 namespace MAC.OxStation.Managers
 {
@@ -10,7 +11,20 @@ namespace MAC.OxStation.Managers
         private PowerStates _powerState;
         private OxStationController _mono;
         private SubRoot _habitat;
+        private PowerRelay _connectedRelay = null;
+        private float EnergyConsumptionPerSecond { get; set; } = QPatch.Configuration.Config.EnergyPerSec;
+        private float AvailablePower => this.ConnectedRelay.GetPower();
 
+        private PowerRelay ConnectedRelay
+        {
+            get
+            {
+                while (_connectedRelay == null)
+                    UpdatePowerRelay();
+
+                return _connectedRelay;
+            }
+        }
         private PowerStates PowerState
         {
             get => _powerState;
@@ -23,6 +37,8 @@ namespace MAC.OxStation.Managers
         }
 
         internal Action<PowerStates> OnPowerUpdate;
+        private bool _hasPowerToConsume;
+        private float _energyToConsume;
 
         internal void Initialize(OxStationController mono)
         {
@@ -42,17 +58,30 @@ namespace MAC.OxStation.Managers
                 QuickLogger.Error($"Habitat returned null");
                 return;
             }
-            if (_habitat.powerRelay.GetPowerStatus() == PowerSystem.Status.Offline && GetPowerState() != PowerStates.UnPowered)
+
+            if (_habitat.powerRelay.GetPowerStatus() == PowerSystem.Status.Offline || !_hasPowerToConsume && GetPowerState() != PowerStates.UnPowered)
             {
                 SetPowerStates(PowerStates.UnPowered);
                 return;
             }
 
-            if (_habitat.powerRelay.GetPowerStatus() != PowerSystem.Status.Offline && GetPowerState() != PowerStates.Powered)
+            if (_habitat.powerRelay.GetPowerStatus() != PowerSystem.Status.Offline || _hasPowerToConsume && GetPowerState() != PowerStates.Powered)
             {
                 SetPowerStates(PowerStates.Powered);
             }
         }
+
+        internal void UpdatePower()
+        {
+            _energyToConsume = EnergyConsumptionPerSecond * DayNightCycle.main.deltaTime;
+            bool requiresEnergy = GameModeUtils.RequiresPower();
+            _hasPowerToConsume = !requiresEnergy || AvailablePower >= _energyToConsume;
+
+            if (!requiresEnergy) return;
+            ConnectedRelay.ConsumeEnergy(_energyToConsume, out float amountConsumed);
+            QuickLogger.Debug($"Energy Consumed: {amountConsumed}");
+        }
+
 
         /// <summary>
         /// Gets the powerState of the unit.
@@ -70,6 +99,25 @@ namespace MAC.OxStation.Managers
         internal void SetPowerStates(PowerStates powerState)
         {
             PowerState = powerState;
+        }
+
+        internal float GetPowerUsage()
+        {
+            return Mathf.Round(EnergyConsumptionPerSecond * 60) / 10f;
+        }
+
+        private void UpdatePowerRelay()
+        {
+            PowerRelay relay = PowerSource.FindRelay(_mono.transform);
+            if (relay != null && relay != _connectedRelay)
+            {
+                _connectedRelay = relay;
+                QuickLogger.Debug("PowerRelay found at last!");
+            }
+            else
+            {
+                _connectedRelay = null;
+            }
         }
     }
 }

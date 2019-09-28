@@ -5,9 +5,10 @@ namespace MAC.OxStation.Buildables
     internal partial class OxStationBuildable
     {
         #region Private Members
-        private const string OnHandHoverEmptyKey = "MAC_OnHandOverEmpty";
-        private const string OnHandHoverNotEmptyKey = "MAC_OnHandOverNotEmpty";
-        private const string OnHolderNotEmptyKey = "MAC_HolderNotEmpty";
+        private const string PowerUsageKey = "MAC_PowerUsage";
+        private const string PerMinuteKey = "MAC_PerMinute";
+        private const string TakeOxygenKey = "MAC_TakeOxygen";
+
         #endregion
 
         #region Internal Properties
@@ -21,27 +22,27 @@ namespace MAC.OxStation.Buildables
             BuildableName = this.FriendlyName;
             TechTypeID = this.TechType;
 
-            LanguageHandler.SetLanguageLine(OnHandHoverEmptyKey, "Click place extinguisher.");
-            LanguageHandler.SetLanguageLine(OnHandHoverNotEmptyKey, "Click remove extinguisher.");
-            LanguageHandler.SetLanguageLine(OnHolderNotEmptyKey, "Cannot deconstruct please remove extinguisher first.");
+            LanguageHandler.SetLanguageLine(PowerUsageKey, "Power Usage");
+            LanguageHandler.SetLanguageLine(PerMinuteKey, "per minute");
+            LanguageHandler.SetLanguageLine(TakeOxygenKey, "Take Oxygen");
         }
         #endregion
 
         #region Internal Methods
-        internal static string OnHandOverEmpty()
+        internal static string PowerUsage()
         {
-            return Language.main.Get(OnHandHoverEmptyKey);
+            return Language.main.Get(PowerUsageKey);
         }
 
-        internal static string HolderNotEmptyMessage()
+        internal static string PerMinute()
         {
-            return Language.main.Get(OnHolderNotEmptyKey);
+            return Language.main.Get(PerMinuteKey);
+        }
+
+        internal static string TakeOxygen()
+        {
+            return Language.main.Get(TakeOxygenKey);
         }
         #endregion
-
-        internal static string OnHandOverNotEmpty()
-        {
-            return Language.main.Get(OnHandHoverNotEmptyKey);
-        }
     }
 }
