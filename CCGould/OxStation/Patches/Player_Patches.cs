@@ -1,5 +1,4 @@
-﻿using Common.Utilities;
-using Harmony;
+﻿using Harmony;
 using MAC.OxStation.Managers;
 using MAC.OxStation.Mono;
 using UnityEngine;
@@ -11,43 +10,32 @@ namespace MAC.OxStation.Patches
     internal class Player_Patches
     {
         private static readonly float _oxygenPerSecond = 10f;
-        public static bool Prefix(ref Player __instance)
+        public static void Postfix(ref Player __instance)
         {
-            bool o2Available = false;
+            if (!__instance.IsInBase()) return;
 
-            if (__instance.IsInBase())
+            var curBase = __instance.GetCurrentSub();
+
+            if (curBase == null || curBase.isCyclops) return;
+
+            var manager = BaseManager.FindManager(curBase);
+
+            var unitsAvailable = manager.BaseUnits.Count > 0;
+
+            if (!unitsAvailable) return;
+
+            foreach (OxStationController baseUnit in manager.BaseUnits)
             {
-                var curBase = __instance.GetCurrentSub();
+                if (baseUnit.OxygenManager.GetO2Level() <= 0 || !baseUnit.IsConstructed || baseUnit.HealthManager.IsDamageApplied()) continue;
 
-                if (curBase != null)
+                if (Player.main.oxygenMgr.GetOxygenAvailable() < Player.main.oxygenMgr.GetOxygenCapacity())
                 {
-                    var manager = BaseManager.FindManager(curBase);
-
-                    var unitsAvailable = manager.BaseUnits.Count > 0;
-
-                    if (unitsAvailable)
-                    {
-                        foreach (OxStationController baseUnit in manager.BaseUnits)
-                        {
-                            if (baseUnit.OxygenManager.GetO2Level() <= 0) continue;
-
-                            if (Player.main.oxygenMgr.GetOxygenAvailable() < Player.main.oxygenMgr.GetOxygenCapacity())
-                            {
-                                var amount = _oxygenPerSecond * Time.deltaTime;
-                                Player.main.oxygenMgr.AddOxygen(amount);
-                                baseUnit.OxygenManager.RemoveOxygen(amount);
-                            }
-                            o2Available = true;
-                            break;
-                        }
-                    }
-
-                    QuickLogger.Debug($"Can Breath: {o2Available}");
-                    return o2Available;
+                    var amount = _oxygenPerSecond * Time.deltaTime;
+                    Player.main.oxygenMgr.AddOxygen(amount);
+                    baseUnit.OxygenManager.RemoveOxygen(amount);
                 }
+                break;
             }
-
-            return o2Available;
         }
     }
 }

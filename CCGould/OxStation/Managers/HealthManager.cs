@@ -1,5 +1,6 @@
 ﻿using Common.Enumerator;
 using Common.Utilities;
+using MAC.OxStation.Config;
 using MAC.OxStation.Mono;
 using System;
 using UnityEngine;
@@ -47,7 +48,7 @@ namespace MAC.OxStation.Managers
             }
         }
 
-        public bool IsDamageApplied()
+        internal bool IsDamageApplied()
         {
             if (_liveMixin == null) return true;
 
@@ -71,11 +72,17 @@ namespace MAC.OxStation.Managers
 
         internal void SetHealth(float health)
         {
+            if (health <= 0)
+            {
+                _liveMixin.Kill();
+                return;
+            }
             _liveMixin.health = health;
         }
 
         internal void Initialize(OxStationController mono)
         {
+            QuickLogger.Debug("Health Initialize");
             _mono = mono;
             _liveMixin = mono.gameObject.AddComponent<LiveMixin>();
             _damagePerSecond = DayNight / _damagePerDay;
@@ -109,14 +116,14 @@ namespace MAC.OxStation.Managers
             {
                 if (GetHealth() >= 1f && !IsDamagedFlag() && !Mathf.Approximately(_prevHealth, GetHealth()))
                 {
-                    QuickLogger.Debug("Drill Repaired", true);
+                    QuickLogger.Debug($"{Mod.FriendlyName} Repaired", true);
                     OnRepaired?.Invoke();
                     _prevHealth = GetHealth();
                 }
 
                 if (GetHealth() <= 0f && IsDamagedFlag() && !Mathf.Approximately(_prevHealth, GetHealth()))
                 {
-                    QuickLogger.Debug("Drill Damaged", true);
+                    QuickLogger.Debug($"{Mod.FriendlyName} Damaged", true);
                     OnDamaged?.Invoke();
                     _prevHealth = GetHealth();
                 }

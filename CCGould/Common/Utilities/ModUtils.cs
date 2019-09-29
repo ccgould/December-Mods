@@ -1,5 +1,4 @@
-﻿using MAC.OxStation.Config;
-using Oculus.Newtonsoft.Json;
+﻿using Oculus.Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.IO;
@@ -44,7 +43,7 @@ namespace Common.Utilities
             if (_coroutineObject == null)
             {
                 var go = new GameObject();
-                _coroutineObject = go.AddComponent<Mod.ModSaver>();
+                _coroutineObject = go.AddComponent<ModSaver>();
             }
 
             return _coroutineObject.StartCoroutine(coroutine);

@@ -59,6 +59,12 @@ namespace MAC.OxStation.Managers
                 return;
             }
 
+            if (_mono.HealthManager.IsDamageApplied())
+            {
+                SetPowerStates(PowerStates.UnPowered);
+                return;
+            }
+
             if (_habitat.powerRelay.GetPowerStatus() == PowerSystem.Status.Offline || !_hasPowerToConsume && GetPowerState() != PowerStates.UnPowered)
             {
                 SetPowerStates(PowerStates.UnPowered);
@@ -71,8 +77,10 @@ namespace MAC.OxStation.Managers
             }
         }
 
-        internal void UpdatePower()
+        internal void ConsumePower()
         {
+            if (_mono.HealthManager.IsDamageApplied()) return;
+
             _energyToConsume = EnergyConsumptionPerSecond * DayNightCycle.main.deltaTime;
             bool requiresEnergy = GameModeUtils.RequiresPower();
             _hasPowerToConsume = !requiresEnergy || AvailablePower >= _energyToConsume;
@@ -103,6 +111,10 @@ namespace MAC.OxStation.Managers
 
         internal float GetPowerUsage()
         {
+            if (_mono.HealthManager.IsDamageApplied())
+            {
+                return 0f;
+            }
             return Mathf.Round(EnergyConsumptionPerSecond * 60) / 10f;
         }
 

@@ -12,13 +12,16 @@ namespace MAC.OxStation.Display
         protected bool IsHovered { get; set; }
         public string TextLineOne { get; set; }
         public string TextLineTwo { get; set; }
+        public bool Disabled { get; set; }
         private bool isHoveredOutOfRange;
 
         public virtual void OnDisable()
         {
             this.IsHovered = false;
             isHoveredOutOfRange = false;
+            Disabled = true;
         }
+
 
         public virtual void Update()
         {
@@ -63,7 +66,13 @@ namespace MAC.OxStation.Display
 
         protected bool InInteractionRange()
         {
+            if (Disabled)
+            {
+                return false;
+            }
             return Mathf.Abs(Vector3.Distance(this.gameObject.transform.position, Player.main.transform.position)) <= 2.5;
         }
+
+
     }
 }

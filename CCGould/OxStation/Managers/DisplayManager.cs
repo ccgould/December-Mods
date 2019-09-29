@@ -30,7 +30,8 @@ namespace MAC.OxStation.Managers
         private Image _healthPreloaderBar;
         private GameObject _giveO2BTN;
         private Text _powerUsage;
-
+        private Text _buttonLbl;
+        private InterfaceButton _giveOIntBtn;
 
         internal void Setup(OxStationController mono)
         {
@@ -51,6 +52,7 @@ namespace MAC.OxStation.Managers
             StartCoroutine(CompleteSetup());
 
             InvokeRepeating("UpdateScreen", 0, 0.5f);
+            InvokeRepeating("CheckDamaged", 0, 0.5f);
         }
 
         private void UpdateScreen()
@@ -60,6 +62,21 @@ namespace MAC.OxStation.Managers
             _healthPreloaderBar.fillAmount = _mono.HealthManager.GetHealthPercentage();
             _healthPreloaderlbl.text = $"{Mathf.RoundToInt(_mono.HealthManager.GetHealthPercentageFull())}%";
             _powerUsage.text = $"{OxStationBuildable.PowerUsage()}: <color=#ff0000ff>{_mono.PowerManager.GetPowerUsage()}</color> {OxStationBuildable.PerMinute()}.";
+
+        }
+
+        private void CheckDamaged()
+        {
+            if (_mono.HealthManager.IsDamageApplied())
+            {
+                _buttonLbl.text = OxStationBuildable.Damaged();
+                _giveOIntBtn.OnDisable();
+            }
+            else
+            {
+                _buttonLbl.text = OxStationBuildable.TakeOxygen();
+                _giveOIntBtn.OnEnable();
+            }
         }
 
         public override void OnButtonClick(string btnName, object tag)
@@ -153,22 +170,22 @@ namespace MAC.OxStation.Managers
                 return false;
             }
 
-            var giveO2BTN = _giveO2BTN.AddComponent<InterfaceButton>();
-            giveO2BTN.ButtonMode = InterfaceButtonMode.Background;
-            giveO2BTN.STARTING_COLOR = dark_bg;
-            giveO2BTN.OnButtonClick = OnButtonClick;
-            giveO2BTN.BtnName = "giveO2";
+            _giveOIntBtn = _giveO2BTN.AddComponent<InterfaceButton>();
+            _giveOIntBtn.ButtonMode = InterfaceButtonMode.Background;
+            _giveOIntBtn.STARTING_COLOR = dark_bg;
+            _giveOIntBtn.OnButtonClick = OnButtonClick;
+            _giveOIntBtn.BtnName = "giveO2";
             #endregion
 
             #region Take O2 BTN LBL
-            var buttonLbl = home.transform.Find("Button").Find("Text")?.gameObject.GetComponent<Text>();
-            if (buttonLbl == null)
+            _buttonLbl = home.transform.Find("Button").Find("Text")?.gameObject.GetComponent<Text>();
+            if (_buttonLbl == null)
             {
                 QuickLogger.Error("Button Text not found.");
                 return false;
             }
 
-            buttonLbl.text = OxStationBuildable.TakeOxygen();
+            _buttonLbl.text = OxStationBuildable.TakeOxygen();
 
             #endregion
 
@@ -222,6 +239,12 @@ namespace MAC.OxStation.Managers
         public override void ClearPage()
         {
             throw new NotImplementedException();
+        }
+
+        private void Destroy()
+        {
+            CancelInvoke("UpdateScreen");
+            CancelInvoke("CheckDamaged");
         }
     }
 }

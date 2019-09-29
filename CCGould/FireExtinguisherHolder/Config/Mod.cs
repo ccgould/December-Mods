@@ -125,9 +125,5 @@ namespace MAC.FireExtinguisherHolder.Config
             return Path.Combine(Environment.CurrentDirectory, "QMods");
         }
         #endregion
-
-        #region Internal Classes
-        internal class ModSaver : MonoBehaviour { }
-        #endregion
     }
 }

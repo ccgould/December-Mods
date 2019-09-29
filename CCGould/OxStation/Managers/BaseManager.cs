@@ -108,8 +108,8 @@ namespace MAC.OxStation.Managers
             if (!BaseUnits.Contains(unit))
             {
                 BaseUnits.Add(unit);
-                QuickLogger.Debug($"Add Power Storage Unit to Base List : {unit.GetPrefabIDString()}", true);
-                QuickLogger.Debug($"Power Storage has been connected to base list Count {BaseUnits.Count}", true);
+                QuickLogger.Debug($"Add {Mod.FriendlyName} Unit to Base List : {unit.GetPrefabIDString()}", true);
+                QuickLogger.Debug($"{Mod.FriendlyName} has been connected to base list Count {BaseUnits.Count}", true);
             }
         }
 

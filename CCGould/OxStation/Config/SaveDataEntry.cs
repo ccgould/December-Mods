@@ -7,9 +7,9 @@ namespace MAC.OxStation.Config
     [Serializable]
     internal class SaveDataEntry
     {
-        [JsonProperty] internal float Fuel { get; set; }
-        [JsonProperty] internal string ID { get; set; }
-        [JsonProperty] internal bool HasTank { get; set; }
+        [JsonProperty] internal string ID;
+        [JsonProperty] internal float OxygenLevel { get; set; }
+        [JsonProperty] internal float HealthLevel { get; set; }
     }
 
     [Serializable]

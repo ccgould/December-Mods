@@ -7,14 +7,21 @@ namespace MAC.OxStation.Managers
 {
     internal class Ox_OxygenManager
     {
-        private float _o2Level = 30;
-        private readonly float _tankCapacity = QPatch.Configuration.Config.TankCapacity;
+        private float _o2Level;
+        private float _tankCapacity;
         private float _amountPerSecond;
         private OxStationController _mono;
 
         internal void Initialize(OxStationController mono)
         {
             _mono = mono;
+            FillTank();
+            _tankCapacity = QPatch.Configuration.Config.TankCapacity;
+        }
+
+        private void FillTank()
+        {
+            _o2Level = QPatch.Configuration.Config.TankCapacity;
         }
 
         /// <summary>

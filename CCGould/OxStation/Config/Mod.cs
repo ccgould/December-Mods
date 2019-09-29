@@ -22,6 +22,9 @@ namespace MAC.OxStation.Config
         internal const string SaveDataFilename = "OxStationSaveData.json";
 
         internal static string MODFOLDERLOCATION => GetModPath();
+        internal static string FriendlyName => "OxStation";
+        internal static string Description => "A oxygen producing unit for your habitat.";
+        internal static string ClassID => "OxStation";
 
         internal static event Action<SaveData> OnDataLoaded;
         #endregion
@@ -121,10 +124,6 @@ namespace MAC.OxStation.Config
         {
             return Path.Combine(Environment.CurrentDirectory, "QMods");
         }
-        #endregion
-
-        #region Internal Classes
-        internal class ModSaver : MonoBehaviour { }
         #endregion
     }
 }

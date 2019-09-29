@@ -39,9 +39,15 @@ namespace MAC.OxStation.Buildables
             return Language.main.Get(PerMinuteKey);
         }
 
+
         internal static string TakeOxygen()
         {
             return Language.main.Get(TakeOxygenKey);
+        }
+
+        internal static string Damaged()
+        {
+            return Language.main.Get("Damaged");
         }
         #endregion
     }

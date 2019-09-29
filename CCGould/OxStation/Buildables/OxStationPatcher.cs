@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using Common.Utilities;
+using MAC.OxStation.Config;
 using MAC.OxStation.Managers;
 using MAC.OxStation.Mono;
 using SMLHelper.V2.Assets;
@@ -24,7 +25,7 @@ namespace MAC.OxStation.Buildables
         #endregion
 
         #region Contructor
-        public OxStationBuildable() : base("OxStation", "OxStation", "A oxygen producing unit for your habitat.")
+        public OxStationBuildable() : base(Mod.ClassID, Mod.FriendlyName, Mod.Description)
         {
             OnFinishedPatching += AdditionalPatching;
         }
@@ -80,7 +81,7 @@ namespace MAC.OxStation.Buildables
                 constructable.allowedOnWall = false;
                 constructable.allowedOnGround = true;
                 constructable.allowedInSub = false;
-                constructable.allowedInBase = true;
+                constructable.allowedInBase = false;
                 constructable.allowedOnCeiling = false;
                 constructable.allowedOutside = true;
                 constructable.model = _prefab.FindChild("model");
@@ -91,7 +92,6 @@ namespace MAC.OxStation.Buildables
                 var lwe = _prefab.AddComponent<LargeWorldEntity>();
                 lwe.cellLevel = LargeWorldEntity.CellLevel.Global;
 
-                _prefab.AddComponent<PlayerInteractionManager>();
                 _prefab.AddComponent<FMOD_CustomLoopingEmitter>();
             }
         }

@@ -38,6 +38,8 @@ namespace MAC.OxStation.Display
         {
             if (string.IsNullOrEmpty(BtnName)) return;
 
+            Disabled = false;
+
             QuickLogger.Debug($"Button Name:{BtnName} || Button Mode {ButtonMode}", true);
 
             switch (this.ButtonMode)

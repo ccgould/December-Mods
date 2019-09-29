@@ -5,8 +5,6 @@ namespace MAC.FireExtinguisherHolder.Buildable
     internal partial class FEHolderBuildable
     {
         #region Private Members
-        private const string OnHandHoverEmptyKey = "MAC_OnHandOverEmpty";
-        private const string OnHandHoverNotEmptyKey = "MAC_OnHandOverNotEmpty";
         private const string OnHolderNotEmptyKey = "MAC_HolderNotEmpty";
         #endregion
 
@@ -21,8 +19,6 @@ namespace MAC.FireExtinguisherHolder.Buildable
             BuildableName = this.FriendlyName;
             TechTypeID = this.TechType;
 
-            LanguageHandler.SetLanguageLine(OnHandHoverEmptyKey, "Click place extinguisher.");
-            LanguageHandler.SetLanguageLine(OnHandHoverNotEmptyKey, "Click remove extinguisher.");
             LanguageHandler.SetLanguageLine(OnHolderNotEmptyKey, "Cannot deconstruct please remove extinguisher first.");
         }
         #endregion
@@ -30,7 +26,7 @@ namespace MAC.FireExtinguisherHolder.Buildable
         #region Internal Methods
         internal static string OnHandOverEmpty()
         {
-            return Language.main.Get(OnHandHoverEmptyKey);
+            return Language.main.Get("ReplaceFireExtinguisher");
         }
 
         internal static string HolderNotEmptyMessage()
@@ -41,7 +37,7 @@ namespace MAC.FireExtinguisherHolder.Buildable
 
         internal static string OnHandOverNotEmpty()
         {
-            return Language.main.Get(OnHandHoverNotEmptyKey);
+            return Language.main.Get("TakeFireExtinguisher");
         }
     }
 }
