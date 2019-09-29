@@ -3,6 +3,7 @@ using Common.Enums;
 using Common.Utilities;
 using MAC.OxStation.Buildables;
 using MAC.OxStation.Display;
+using MAC.OxStation.Enums;
 using MAC.OxStation.Mono;
 using System;
 using System.Collections;
@@ -51,8 +52,7 @@ namespace MAC.OxStation.Managers
 
             StartCoroutine(CompleteSetup());
 
-            InvokeRepeating("UpdateScreen", 0, 0.5f);
-            InvokeRepeating("CheckDamaged", 0, 0.5f);
+            InvokeRepeating(nameof(UpdateScreen), 0, 0.5f);
         }
 
         private void UpdateScreen()
@@ -65,17 +65,21 @@ namespace MAC.OxStation.Managers
 
         }
 
-        private void CheckDamaged()
+        internal void ChangeTakeO2State(ButtonStates state)
         {
-            if (_mono.HealthManager.IsDamageApplied())
+            QuickLogger.Debug($"Changing Button State for {nameof(ChangeTakeO2State)}");
+            switch (state)
             {
-                _buttonLbl.text = OxStationBuildable.Damaged();
-                _giveOIntBtn.OnDisable();
-            }
-            else
-            {
-                _buttonLbl.text = OxStationBuildable.TakeOxygen();
-                _giveOIntBtn.OnEnable();
+                case ButtonStates.Enabled:
+                    _buttonLbl.text = OxStationBuildable.TakeOxygen();
+                    _giveOIntBtn.OnEnable();
+                    break;
+                case ButtonStates.Disabled:
+                    _buttonLbl.text = OxStationBuildable.Damaged();
+                    _giveOIntBtn.OnDisable();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
         }
 
@@ -243,8 +247,7 @@ namespace MAC.OxStation.Managers
 
         private void Destroy()
         {
-            CancelInvoke("UpdateScreen");
-            CancelInvoke("CheckDamaged");
+            CancelInvoke(nameof(UpdateScreen));
         }
     }
 }

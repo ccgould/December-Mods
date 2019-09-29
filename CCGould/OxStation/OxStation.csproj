@@ -69,6 +69,7 @@
     <Compile Include="Config\SaveDataEntry.cs" />
     <Compile Include="Display\InterfaceButton.cs" />
     <Compile Include="Display\OnScreenButton.cs" />
+    <Compile Include="Enums\ButtonStates.cs" />
     <Compile Include="Managers\AnimationManager.cs" />
     <Compile Include="Managers\AudioManager.cs" />
     <Compile Include="Managers\BaseManager.cs" />

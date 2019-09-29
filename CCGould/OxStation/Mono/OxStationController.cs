@@ -1,6 +1,7 @@
 ﻿using Common.Enumerator;
 using Common.Utilities;
 using MAC.OxStation.Config;
+using MAC.OxStation.Enums;
 using MAC.OxStation.Managers;
 using System;
 using System.Collections;
@@ -41,6 +42,8 @@ namespace MAC.OxStation.Mono
                 HealthManager = new HealthManager();
                 HealthManager.Initialize(this);
                 HealthManager.SetHealth(100);
+                HealthManager.OnDamaged += OnDamaged;
+                HealthManager.OnRepaired += OnRepaired;
                 StartCoroutine(HealthCheck());
             }
 
@@ -55,7 +58,7 @@ namespace MAC.OxStation.Mono
             if (AudioManager == null)
             {
                 AudioManager = new AudioManager(gameObject.GetComponent<FMOD_CustomLoopingEmitter>());
-                InvokeRepeating("UpdateAudio", 0, 1);
+                InvokeRepeating(nameof(UpdateAudio), 0, 1);
             }
 
             AnimationManager = gameObject.GetComponent<AnimationManager>();
@@ -67,6 +70,16 @@ namespace MAC.OxStation.Mono
             }
             QuickLogger.Debug("Initialized");
             _initialized = true;
+        }
+
+        private void OnRepaired()
+        {
+            DisplayManager.ChangeTakeO2State(ButtonStates.Enabled);
+        }
+
+        private void OnDamaged()
+        {
+            DisplayManager.ChangeTakeO2State(ButtonStates.Disabled);
         }
 
         private IEnumerator GenerateOxygen()
@@ -194,7 +207,7 @@ namespace MAC.OxStation.Mono
             StopCoroutine(UpdatePowerState());
             StopCoroutine(GenerateOxygen());
             StopCoroutine(HealthCheck());
-            CancelInvoke("UpdateAudio");
+            CancelInvoke(nameof(UpdateAudio));
             BaseManager.RemoveBaseUnit(this);
         }
 

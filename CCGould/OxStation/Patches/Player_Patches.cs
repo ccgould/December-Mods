@@ -1,4 +1,5 @@
-﻿using Harmony;
+﻿using Common.Utilities;
+using Harmony;
 using MAC.OxStation.Managers;
 using MAC.OxStation.Mono;
 using UnityEngine;
@@ -10,19 +11,33 @@ namespace MAC.OxStation.Patches
     internal class Player_Patches
     {
         private static readonly float _oxygenPerSecond = 10f;
-        public static void Postfix(ref Player __instance)
+        public static bool Prefix(ref Player __instance, ref bool __result)
         {
-            if (!__instance.IsInBase()) return;
+            bool canBreathe = false;
+
+            if (!__instance.IsInBase()) return true;
+
+            QuickLogger.Debug($"Is InBase {__instance.IsInBase()}", true);
 
             var curBase = __instance.GetCurrentSub();
-
-            if (curBase == null || curBase.isCyclops) return;
 
             var manager = BaseManager.FindManager(curBase);
 
             var unitsAvailable = manager.BaseUnits.Count > 0;
 
-            if (!unitsAvailable) return;
+            if (!unitsAvailable)
+            {
+                QuickLogger.Debug($"Can Breathe {canBreathe}", true);
+                __result = canBreathe;
+                return false;
+            }
+
+            if (__instance.oxygenMgr.GetOxygenAvailable() >= __instance.oxygenMgr.GetOxygenCapacity())
+            {
+                QuickLogger.Debug($"Can Breathe Check 2 {canBreathe}", true);
+                __result = canBreathe;
+                return false;
+            }
 
             foreach (OxStationController baseUnit in manager.BaseUnits)
             {
@@ -33,9 +48,13 @@ namespace MAC.OxStation.Patches
                     var amount = _oxygenPerSecond * Time.deltaTime;
                     Player.main.oxygenMgr.AddOxygen(amount);
                     baseUnit.OxygenManager.RemoveOxygen(amount);
+                    canBreathe = true;
                 }
                 break;
             }
+            QuickLogger.Debug($"Can Breathe Check 2 {canBreathe}", true);
+            __result = canBreathe;
+            return false;
         }
     }
 }

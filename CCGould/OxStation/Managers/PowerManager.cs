@@ -90,7 +90,6 @@ namespace MAC.OxStation.Managers
             QuickLogger.Debug($"Energy Consumed: {amountConsumed}");
         }
 
-
         /// <summary>
         /// Gets the powerState of the unit.
         /// </summary>
@@ -111,7 +110,7 @@ namespace MAC.OxStation.Managers
 
         internal float GetPowerUsage()
         {
-            if (_mono.HealthManager.IsDamageApplied())
+            if (_mono.HealthManager.IsDamageApplied() || PowerState != PowerStates.Powered)
             {
                 return 0f;
             }
