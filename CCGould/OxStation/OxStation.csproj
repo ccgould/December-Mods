@@ -76,6 +76,7 @@
     <Compile Include="Managers\DisplayManager.cs" />
     <Compile Include="Managers\HealthManager.cs" />
     <Compile Include="Managers\Ox_OxygenManager.cs" />
+    <Compile Include="Managers\PlayerInteractionManager.cs" />
     <Compile Include="Managers\PowerManager.cs" />
     <Compile Include="Mono\OxStationController.cs" />
     <Compile Include="Patches\Player_Patches.cs" />

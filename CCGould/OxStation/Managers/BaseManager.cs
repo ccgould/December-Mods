@@ -48,12 +48,7 @@ namespace MAC.OxStation.Managers
 
         public static BaseManager FindManager(SubRoot subRoot)
         {
-
-            //if (!subRoot.isBase) return null; //Disabled to allow Cyclops Operation
-
-            //QuickLogger.Debug($"Processing SubRoot = {subRoot.GetInstanceID()} || Name {subRoot.GetSubName()}");
-
-            //var pre = subRoot.gameObject.GetComponent<PrefabIdentifier>();
+            if (subRoot == null || !subRoot.isBase) return null;
 
             var manager = Managers.Find(x => x.InstanceID == subRoot.GetInstanceID() && x.Habitat == subRoot);
 

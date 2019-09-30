@@ -68,9 +68,12 @@ namespace MAC.OxStation.Mono
             {
                 QuickLogger.Error($"Animation Manager was not found");
             }
+
             QuickLogger.Debug("Initialized");
             _initialized = true;
         }
+
+
 
         private void OnRepaired()
         {
@@ -123,10 +126,9 @@ namespace MAC.OxStation.Mono
 
         internal void AddToBaseManager(BaseManager managers = null)
         {
-            if (SubRoot == null)
-            {
-                SubRoot = GetComponentInParent<SubRoot>();
-            }
+            SubRoot = GetComponentInParent<SubRoot>();
+
+            if (SubRoot == null) return;
 
             Manager = managers ?? BaseManager.FindManager(SubRoot);
             Manager.AddBaseUnit(this);
@@ -174,12 +176,26 @@ namespace MAC.OxStation.Mono
 
             if (constructed)
             {
+
+                AddToBaseManager();
+
+                if (SubRoot == null)
+                {
+                    var playerInterationManager = gameObject.GetComponent<PlayerInteractionManager>();
+
+                    if (playerInterationManager != null)
+                    {
+                        playerInterationManager.Initialize(this);
+                    }
+
+                    return;
+                }
+
                 if (!_initialized)
                 {
                     Initialize();
                 }
 
-                AddToBaseManager();
                 AnimationManager.SetBoolHash(IsRunningHash, true);
 
                 if (DisplayManager == null)

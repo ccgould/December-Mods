@@ -92,6 +92,7 @@ namespace MAC.OxStation.Buildables
                 var lwe = _prefab.AddComponent<LargeWorldEntity>();
                 lwe.cellLevel = LargeWorldEntity.CellLevel.Global;
 
+                _prefab.AddComponent<PlayerInteractionManager>();
                 _prefab.AddComponent<FMOD_CustomLoopingEmitter>();
             }
         }

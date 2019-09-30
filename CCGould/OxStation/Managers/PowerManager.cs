@@ -53,11 +53,7 @@ namespace MAC.OxStation.Managers
 
         internal void UpdatePowerState()
         {
-            if (_habitat == null)
-            {
-                QuickLogger.Error($"Habitat returned null");
-                return;
-            }
+            if (_habitat == null) return;
 
             if (_mono.HealthManager.IsDamageApplied())
             {

@@ -1,4 +1,5 @@
-﻿using MAC.OxStation.Mono;
+﻿using MAC.OxStation.Config;
+using MAC.OxStation.Mono;
 
 namespace MAC.OxStation.Managers
 {
@@ -12,10 +13,11 @@ namespace MAC.OxStation.Managers
         }
         public void OnHandHover(GUIHand hand)
         {
-            if (_mono == null) return;
+            if (_mono == null || _mono.SubRoot != null) return;
+
             HandReticle main = HandReticle.main;
             main.SetIcon(HandReticle.IconType.Default);
-            main.SetInteractText($"Health: {_mono.HealthManager.GetHealth()}| Oxygen Level: {_mono.OxygenManager.GetO2Level()}", false, HandReticle.Hand.None);
+            main.SetInteractText($"{Mod.FriendlyName} cannot operate without being placed on a platform.", false, HandReticle.Hand.None);
         }
 
         public void OnHandClick(GUIHand hand)
