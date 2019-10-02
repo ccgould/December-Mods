@@ -8,13 +8,13 @@ using SMLHelper.V2.Assets;
 using UnityEngine;
 
 namespace MAC.WarpShield {
-    public class ExoSuitWarpShieldModule : Craftable {
+    public class WarpShieldModule : Craftable {
 
-        private static readonly ExoSuitWarpShieldModule main = new ExoSuitWarpShieldModule();
+        private static readonly WarpShieldModule main = new WarpShieldModule();
 
         internal static TechType TechTypeID { get; private set; }
 
-        public ExoSuitWarpShieldModule(): base("ExosuitWarpShieldModule", "Exosuit Phasic Stabilizer", "Stabilizes reality in the vicinity, preventing most forms of teleportion.")
+        public WarpShieldModule() : base("WarpShieldModule", " Phasic Stabilization Module", "Stabilizes reality in the vicinity, preventing most forms of teleportion.")
         {
             OnFinishedPatching += AdditionalPatching;
         }
@@ -23,14 +23,14 @@ namespace MAC.WarpShield {
         public override TechGroup GroupForPDA { get; } = TechGroup.VehicleUpgrades;
         public override TechCategory CategoryForPDA { get; } = TechCategory.VehicleUpgrades;
         public override string AssetsFolder { get; } = "WarpShield/Assets";
-        public override string[] StepsToFabricatorTab { get; } = new[] { "ExosuitModules" };
-        public override TechType RequiredForUnlock { get; } = TechType.None;
+        public override string[] StepsToFabricatorTab { get; } = new[] { "CommonModules" };
+        public override TechType RequiredForUnlock { get; } = TechType.PrecursorPrisonIonGenerator;
 
         public override GameObject GetGameObject()
         {
-            GameObject prefab = CraftData.GetPrefabForTechType(TechType.ExosuitThermalReactorModule);
+            GameObject prefab = CraftData.GetPrefabForTechType(TechType.HullReinforcementModule);
             return GameObject.Instantiate(prefab);
-            
+
         }
 
         protected override TechData GetBlueprintRecipe()
@@ -55,7 +55,7 @@ namespace MAC.WarpShield {
         private void AdditionalPatching()
         {
             TechTypeID = this.TechType;
-            CraftDataHandler.SetEquipmentType(this.TechType, EquipmentType.ExosuitModule);
+            CraftDataHandler.SetEquipmentType(this.TechType, EquipmentType.VehicleModule);
         }
     }
 }

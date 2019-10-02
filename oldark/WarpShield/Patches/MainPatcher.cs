@@ -13,8 +13,7 @@ namespace MAC.WarpShield {
 
         public static void Patch()
         {
-            ExoSuitWarpShieldModule.PatchSMLHelper();
-            SeamothWarpShieldModule.PatchSMLHelper();
+            WarpShieldModule.PatchSMLHelper();
 
             var harmony = HarmonyInstance.Create("com.oldark.subnautica.warpshield.mod");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
