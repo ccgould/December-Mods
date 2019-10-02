@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PortableRadio")]
+[assembly: AssemblyTitle("ScubaManifold")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PortableRadio")]
+[assembly: AssemblyProduct("ScubaManifold")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1923a354-dd33-4c27-bab2-06e9c31ce4f5")]
+[assembly: Guid("0d07f580-b0eb-4d5b-b21e-4ada61e6af49")]
 
 // Version information for an assembly consists of the following four values:
 //
