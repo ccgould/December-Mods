@@ -23,10 +23,13 @@ namespace MAC.ScubaManifold
         public new void Patch()
         {
             base.Patch();
+
             CraftDataHandler.SetEquipmentType(this.TechType, EquipmentType.Tank);
             CraftDataHandler.SetBackgroundType(this.TechType, CraftData.BackgroundType.ExosuitArm);
             CraftDataHandler.SetCraftingTime(this.TechType, 10);
             CraftDataHandler.SetItemSize(this.TechType, 4, 4);
+
+            ScubaManifold.techType = this.TechType;
         }
 
         public ScubaManifoldItem() : base("ScubaManifold", "Scuba Manifold", "Combines the oxygen supply of all carried tanks") { }
@@ -49,8 +52,9 @@ namespace MAC.ScubaManifold
             Pickupable pickupable = obj.GetComponent<Pickupable>();
             pickupable.destroyOnDeath = false;
 
-            ScubaManifold scuba = obj.AddComponent<ScubaManifold>();
-            scuba.TechType = this.TechType;
+            ScubaManifold scuba = Player.mainObject.GetComponent<ScubaManifold>() ?? Player.mainObject.AddComponent<ScubaManifold>();
+
+            GameObject.DestroyImmediate(obj.GetComponent<Oxygen>());
 
             return obj;
         }
@@ -58,29 +62,39 @@ namespace MAC.ScubaManifold
 
     public class ScubaManifold : MonoBehaviour
     {
-        public TechType TechType;
+        public static ScubaManifold main;
+        public static TechType techType;
+
+        public void Awake()
+        {
+            if (!main) main = this;
+            else
+            {
+                Destroy(this);
+                Console.WriteLine("[ScubaManifold] [ERROR] ScubaManifold component must be a singleton!");
+            }
+        }
 
         public void Update()
         {
-            if (Inventory.main.equipment.GetItemInSlot("Tank").item.GetComponent<ScubaManifold>() == this)
+            List<InventoryItem> items = new List<InventoryItem>();
+            Inventory.main.container.GetItemTypes().ForEach(type => items.AddRange(Inventory.main.container.GetItems(type)));
+            List<Oxygen> sources = items.Where(item => item.item.gameObject.GetComponent<Oxygen>() != null).Select(item => item.item.gameObject.GetComponent<Oxygen>()).ToList();
+
+            if (Inventory.main.equipment.GetItemInSlot("Tank")?.item?.GetTechType() == ScubaManifold.techType)
             {
-                List<InventoryItem> items = new List<InventoryItem>();
-
-                Inventory.main.container.GetItemTypes().ForEach(type => items.AddRange(Inventory.main.container.GetItems(type)));
-
-                items = items.Where(item => item.item.gameObject.GetComponent<Oxygen>() != null && item.item.GetTechType() != this.TechType).ToList();
-
-                float oxygen = items.Select(item => item.item.gameObject.GetComponent<Oxygen>().oxygenCapacity).Sum();
-                items.ForEach(item => item.item.gameObject.GetComponent<Oxygen>().oxygenAvailable = 0);
-
-                if (GetComponent<Oxygen>().oxygenCapacity != oxygen)
+                ErrorMessage.AddDebug("Equipped!");
+                sources.ForEach(source =>
                 {
-                    GetComponent<Oxygen>().oxygenCapacity = oxygen;
-                    Player.main.oxygenMgr.UnregisterSource(GetComponent<Oxygen>());
-                    Player.main.oxygenMgr.RegisterSource(GetComponent<Oxygen>());
-                }
-
-                ErrorMessage.AddDebug((45f + oxygen).ToString());
+                    Player.main.oxygenMgr.RegisterSource(source);
+                });
+            }
+            else
+            {
+                sources.ForEach(source =>
+                {
+                    Player.main.oxygenMgr.UnregisterSource(source);
+                });
             }
         }
     }
