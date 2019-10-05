@@ -28,13 +28,14 @@ namespace MAC.ScubaManifold
             CraftDataHandler.SetBackgroundType(this.TechType, CraftData.BackgroundType.ExosuitArm);
             CraftDataHandler.SetCraftingTime(this.TechType, 10);
             CraftDataHandler.SetItemSize(this.TechType, 4, 4);
+            KnownTechHandler.SetAnalysisTechEntry(TechType.Exosuit, new TechType[] { this.TechType });
 
             ScubaManifold.techType = this.TechType;
         }
 
         public ScubaManifoldItem() : base("ScubaManifold", "Scuba Manifold", "Combines the oxygen supply of all carried tanks") { }
 
-        protected override TechData GetBlueprintRecipe() => new TechData() { craftAmount = 1 };
+        protected override TechData GetBlueprintRecipe() => new TechData() { Ingredients = new List<Ingredient>() { new Ingredient(TechType.Silicone, 1), new Ingredient(TechType.PlasteelIngot, 1), new Ingredient(TechType.Kyanite, 2)} };
         public override CraftTree.Type FabricatorType => CraftTree.Type.Workbench;
         public override string[] StepsToFabricatorTab => new string[] { "TankMenu" };
 
