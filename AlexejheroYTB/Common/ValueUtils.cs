@@ -22,5 +22,15 @@ namespace AlexejheroYTB.Common
         {
             return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
         }
+
+        public static bool ToBool(this int number)
+        {
+            return number == 0 ? false : true;
+        }
+
+        public static int ToInt(this bool boolean)
+        {
+            return boolean ? 1 : 0;
+        }
     }
 }

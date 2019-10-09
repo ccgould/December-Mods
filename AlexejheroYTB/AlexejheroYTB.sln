@@ -9,8 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketRadio", "PocketRadio\
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Common", "Common\Common.shproj", "{6799A4A3-DB8D-4A89-B48A-C10C2302BF52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalSeaglideSettings", "GlobalSeaglideSettings\GlobalSeaglideSettings.csproj", "{437E36A0-0EF2-46FC-8026-DBDFA91060D2}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Common\Common.projitems*{437e36a0-0ef2-46fc-8026-dbdfa91060d2}*SharedItemsImports = 4
 		Common\Common.projitems*{6799a4a3-db8d-4a89-b48a-c10c2302bf52}*SharedItemsImports = 13
 		Common\Common.projitems*{d91e1a32-2668-4f38-862b-37d6b8f4030f}*SharedItemsImports = 4
 	EndGlobalSection
@@ -27,6 +30,10 @@ Global
 		{D91E1A32-2668-4F38-862B-37D6B8F4030F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D91E1A32-2668-4F38-862B-37D6B8F4030F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D91E1A32-2668-4F38-862B-37D6B8F4030F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{437E36A0-0EF2-46FC-8026-DBDFA91060D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{437E36A0-0EF2-46FC-8026-DBDFA91060D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{437E36A0-0EF2-46FC-8026-DBDFA91060D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{437E36A0-0EF2-46FC-8026-DBDFA91060D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
