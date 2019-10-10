@@ -1,6 +1,7 @@
 ﻿using SMLHelper.V2.Assets;
 using SMLHelper.V2.Crafting;
 using SMLHelper.V2.Handlers;
+using SMLHelper.V2.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,20 +25,22 @@ namespace MAC.ScubaManifold
         {
             base.Patch();
 
-            CraftDataHandler.SetEquipmentType(this.TechType, EquipmentType.Tank);
-            CraftDataHandler.SetBackgroundType(this.TechType, CraftData.BackgroundType.ExosuitArm);
-            CraftDataHandler.SetCraftingTime(this.TechType, 10);
-            CraftDataHandler.SetItemSize(this.TechType, 4, 4);
-            KnownTechHandler.SetAnalysisTechEntry(TechType.Exosuit, new TechType[] { this.TechType });
+            base.OnFinishedPatching += () =>
+            {
+                CraftDataHandler.SetEquipmentType(this.TechType, EquipmentType.Tank);
+                CraftDataHandler.SetBackgroundType(this.TechType, CraftData.BackgroundType.ExosuitArm);
+                CraftDataHandler.SetCraftingTime(this.TechType, 5);
+                CraftDataHandler.SetItemSize(this.TechType, 3, 2);
 
-            ScubaManifold.techType = this.TechType;
+                ScubaManifold.techType = this.TechType;
+            };
         }
 
         public ScubaManifoldItem() : base("ScubaManifold", "Scuba Manifold", "Combines the oxygen supply of all carried tanks") { }
 
-        protected override TechData GetBlueprintRecipe() => new TechData() { Ingredients = new List<Ingredient>() { new Ingredient(TechType.Silicone, 1), new Ingredient(TechType.PlasteelIngot, 1), new Ingredient(TechType.Kyanite, 2)} };
-        public override CraftTree.Type FabricatorType => CraftTree.Type.Workbench;
-        public override string[] StepsToFabricatorTab => new string[] { "TankMenu" };
+        protected override TechData GetBlueprintRecipe() => new TechData() { Ingredients = new List<Ingredient>() { new Ingredient(TechType.Silicone, 1), new Ingredient(TechType.Titanium, 3), new Ingredient(TechType.Lubricant, 2)}, craftAmount = 1 };
+        public override CraftTree.Type FabricatorType => CraftTree.Type.Fabricator;
+        public override string[] StepsToFabricatorTab => "Personal/Equipment".Split('/');
 
         public override TechGroup GroupForPDA => TechGroup.Personal;
         public override TechCategory CategoryForPDA => TechCategory.Equipment;
@@ -47,7 +50,7 @@ namespace MAC.ScubaManifold
 
         public override GameObject GetGameObject()
         {
-            GameObject prefab = Resources.Load<GameObject>("worldentities/tools/tank");
+            GameObject prefab = CraftData.GetPrefabForTechType(TechType.Tank);
             GameObject obj = GameObject.Instantiate(prefab);
 
             Pickupable pickupable = obj.GetComponent<Pickupable>();
@@ -84,7 +87,6 @@ namespace MAC.ScubaManifold
 
             if (Inventory.main.equipment.GetItemInSlot("Tank")?.item?.GetTechType() == ScubaManifold.techType)
             {
-                ErrorMessage.AddDebug("Equipped!");
                 sources.ForEach(source =>
                 {
                     Player.main.oxygenMgr.RegisterSource(source);
