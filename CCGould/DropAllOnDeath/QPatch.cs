@@ -1,7 +1,10 @@
 ﻿using Common.Utilities;
 using Harmony;
+using MAC.DropAllOnDeath.Config;
+using Oculus.Newtonsoft.Json;
+using SMLHelper.V2.Handlers;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 
 namespace MAC.DropAllOnDeath
@@ -19,6 +22,9 @@ namespace MAC.DropAllOnDeath
 
             try
             {
+                LoadConfiguration();
+
+                OptionsPanelHandler.RegisterModOptions(new Options());
 
                 HarmonyInstance.Create("com.dropallondeath.MAC").PatchAll(Assembly.GetExecutingAssembly());
 
@@ -29,29 +35,31 @@ namespace MAC.DropAllOnDeath
                 QuickLogger.Error(ex);
             }
         }
-    }
 
-    [HarmonyPatch(typeof(Inventory))]
-    [HarmonyPatch("LoseItems")]
-    internal class Inventory_Patcher
-    {
-        public static void Postfix(ref Inventory __instance)
+        private static void LoadConfiguration()
         {
-            List<InventoryItem> list = new List<InventoryItem>();
+            // == Load Configuration == //
+            string configJson = File.ReadAllText(Mod.ConfigurationFile().Trim());
 
-            foreach (InventoryItem inventoryItem in Inventory.main.container)
-            {
-                list.Add(inventoryItem);
-            }
-            foreach (InventoryItem inventoryItem2 in ((IItemsContainer)Inventory.main.equipment))
-            {
-                list.Add(inventoryItem2);
-            }
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.MissingMemberHandling = MissingMemberHandling.Ignore;
 
-            for (int i = 0; i < list.Count; i++)
-            {
-                __instance.InternalDropItem(list[i].item, true);
-            }
+            //LoadData
+            Configuration = JsonConvert.DeserializeObject<ModConfiguration>(configJson, settings);
+        }
+
+        private static void SaveConfiguration()
+        {
+            var output = JsonConvert.SerializeObject(Configuration, Formatting.Indented);
+            File.WriteAllText(Mod.ConfigurationFile().Trim(), output);
+        }
+
+        public static ModConfiguration Configuration { get; set; }
+
+        internal static void SetModEnabled(bool eValue)
+        {
+            Configuration.Config.Enabled = eValue;
+            SaveConfiguration();
         }
     }
 }
