@@ -1,0 +1,15 @@
+{
+  "Id": "DropAllOnDeath",
+  "DisplayName": "Drop All On Death",
+  "Author": "MAC",
+  "Version": "1.0.0",
+  "Enable": true,
+  "AssemblyName": "DropAllOnDeath.dll",
+  "EntryMethod": "MAC.DropAllOnDeath.QPatch.Patch",
+  "Dependencies": [
+    "SMLHelper"
+  ],
+  "Config": {
+    "Enabled": true
+  }
+}
