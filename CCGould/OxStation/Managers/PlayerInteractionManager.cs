@@ -7,6 +7,7 @@ namespace MAC.OxStation.Managers
     {
         private OxStationController _mono;
 
+
         internal void Initialize(OxStationController mono)
         {
             _mono = mono;

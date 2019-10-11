@@ -15,7 +15,7 @@ namespace MAC.OxStation.Patches
         {
             bool canBreathe = false;
 
-            if (!__instance.IsInBase()) return true;
+            if (!__instance.IsInBase() || __instance.IsUnderwater()) return true;
 
             QuickLogger.Debug($"Is InBase {__instance.IsInBase()}", true);
 

@@ -73,8 +73,6 @@ namespace MAC.OxStation.Mono
             _initialized = true;
         }
 
-
-
         private void OnRepaired()
         {
             DisplayManager.ChangeTakeO2State(ButtonStates.Enabled);
