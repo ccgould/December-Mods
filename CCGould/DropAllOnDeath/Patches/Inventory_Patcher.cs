@@ -1,0 +1,4 @@
+﻿namespace MAC.DropAllOnDeath.Patches
+{
+
+}
