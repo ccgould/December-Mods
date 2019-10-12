@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using MAC.DropAllOnDeath.Config;
 using System.Collections.Generic;
 
 namespace MAC.DropAllOnDeath.Patches
@@ -9,7 +10,7 @@ namespace MAC.DropAllOnDeath.Patches
     {
         public static void Postfix(ref Inventory __instance)
         {
-            if (!QPatch.Configuration.Config.Enabled) return;
+            if (!Mod.Configuration.Config.Enabled) return;
 
             List<InventoryItem> list = new List<InventoryItem>();
 

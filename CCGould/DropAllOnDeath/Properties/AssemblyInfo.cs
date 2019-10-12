@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DropAllOnDeath")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Drop All On Death")]
+[assembly: AssemblyDescription("A mod for Subnautica that drops all items from your inventory.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DropAllOnDeath")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCompany("FCStudios")]
+[assembly: AssemblyProduct("Drop All On Death")]
+[assembly: AssemblyCopyright("Copyright © FCStudios 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
