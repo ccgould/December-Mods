@@ -1,0 +1,11 @@
+﻿{
+  "Id": "NightVisionChip",
+  "DisplayName": "Night Vision",
+  "Author": "Modding Advent Calendar 2019",
+  "Version": "1.0",
+  "Requires": [],
+  "Enable": true,
+  "AssemblyName": "NightVisionChip.dll",
+  "EntryMethod": "MAC.NightVisionChip.MainPatcher.Patch",
+  "Config": {}
+}
