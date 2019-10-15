@@ -15,6 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoMenuPause", "NoMenuPause\
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Common\Common.projitems*{27282393-bd00-4c51-b45d-b6a44cbd9e07}*SharedItemsImports = 4
 		Common\Common.projitems*{437e36a0-0ef2-46fc-8026-dbdfa91060d2}*SharedItemsImports = 4
 		Common\Common.projitems*{6799a4a3-db8d-4a89-b48a-c10c2302bf52}*SharedItemsImports = 13
 		Common\Common.projitems*{d91e1a32-2668-4f38-862b-37d6b8f4030f}*SharedItemsImports = 4
