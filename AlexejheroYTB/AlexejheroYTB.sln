@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalSeaglideSettings", "G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoMenuPause", "NoMenuPause\NoMenuPause.csproj", "{27282393-BD00-4C51-B45D-B6A44CBD9E07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCP294", "SCP294\SCP294.csproj", "{C120E0F7-4563-404E-BF5E-1898D3581C86}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Common\Common.projitems*{27282393-bd00-4c51-b45d-b6a44cbd9e07}*SharedItemsImports = 4
@@ -41,6 +43,10 @@ Global
 		{27282393-BD00-4C51-B45D-B6A44CBD9E07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27282393-BD00-4C51-B45D-B6A44CBD9E07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27282393-BD00-4C51-B45D-B6A44CBD9E07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C120E0F7-4563-404E-BF5E-1898D3581C86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C120E0F7-4563-404E-BF5E-1898D3581C86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C120E0F7-4563-404E-BF5E-1898D3581C86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C120E0F7-4563-404E-BF5E-1898D3581C86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

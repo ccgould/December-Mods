@@ -12,6 +12,16 @@ namespace MAC.GlobalSeaglideSettings
         {
             HarmonyInstance.Create("MAC.GlobalSeaglideSettings").PatchAll();
             OptionsPanelHandler.RegisterModOptions(new Options());
+
+            new GameObject().AddComponent<Test>();
+        }
+    }
+
+    public class Test : MonoBehaviour
+    {
+        public void Update()
+        {
+            ErrorMessage.AddDebug(Inventory.main?.container?.GetItems(TechType.Seaglide)?[0]?.item?.GetComponent<ToggleLights>()?.lightState.ToString());
         }
     }
 
