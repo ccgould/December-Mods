@@ -85,6 +85,7 @@ namespace MAC.PocketRadio
             {
                 Console.WriteLine("[Pocket Radio] [ERROR] Could not get playSound!");
             }
+
             try
             {
                 var sound = GameObject.FindObjectsOfType<Radio>().Where(r => r.radioSound != null).ToArray()[0].radioSound;
