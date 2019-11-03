@@ -46,8 +46,8 @@ namespace MAC.ConfigurableOutcropCount
 
         public override void BuildModOptions()
         {
-            AddSliderOption("COC.Min", "Minimum", 0, 10, Minimum);
-            AddSliderOption("COC.Max", "Maximum", 0, 10, Maximum);
+            AddSliderOption("COC.Min", "Minimum", 0, 5, Minimum);
+            AddSliderOption("COC.Max", "Maximum", 0, 5, Maximum);
         }
     }
 
