@@ -25,7 +25,7 @@ namespace MAC.DropAllOnDeath.Patches
 
             for (int i = 0; i < list.Count; i++)
             {
-                __instance.InternalDropItem(list[i].item, true);
+                __instance.InternalDropItem(list[i].item);
             }
         }
     }

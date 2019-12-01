@@ -16,12 +16,64 @@ namespace MAC.FireExtinguisherHolder.Mono
         private bool _hasTank = false;
         private float _fuel = 100f;
         private FEHolderSaveDataEntry _saveData;
+        private bool _fromSave;
+        private bool _runStartUpOnEnable;
+
         #endregion
 
         #region Internal Properties
         internal bool IsConstructed { get; private set; }
 
         #endregion
+
+
+        private void OnEnable()
+        {
+
+            if (!_runStartUpOnEnable) return;
+
+            Setup();
+
+            if (_fromSave)
+            {
+                QuickLogger.Info("Loading FEExtinguishers");
+                var prefabIdentifier = GetComponent<PrefabIdentifier>();
+                var id = prefabIdentifier?.Id ?? string.Empty;
+                var data = Mod.GetSaveData(id);
+
+                if (data == null) return;
+
+                _fuel = data.Fuel;
+                _hasTank = data.HasTank;
+
+                if (_tankMesh != null)
+                {
+                    StartCoroutine(ShowTank(data));
+                }
+                else
+                {
+                    QuickLogger.Error("Tank Mesh Not Found");
+                }
+
+                _fromSave = false;
+
+                QuickLogger.Info("Loaded FEExtinguishers");
+            }
+        }
+
+        private void Setup()
+        {
+            if (!_initialized)
+            {
+                if (!FindComponents())
+                {
+                    _initialized = false;
+                    return;
+                }
+                _tankMesh.SetActive(_hasTank);
+                _initialized = true;
+            }
+        }
 
         #region IHandTarget
         public void OnHandHover(GUIHand hand)
@@ -78,13 +130,19 @@ namespace MAC.FireExtinguisherHolder.Mono
         /// </summary>
         private void TakeTank()
         {
-            GameObject gameObject = CraftData.AddToInventory(TechType.FireExtinguisher, 1, false, false);
-            if (gameObject != null)
+            var size =  CraftData.GetItemSize(TechType.FireExtinguisher);
+            
+            if (!Inventory.main.HasRoomFor(size.x, size.y))
             {
-                _hasTank = false;
-                _tankMesh.SetActive(false);
-                gameObject.GetComponent<FireExtinguisher>().fuel = _fuel;
+                QuickLogger.Message(Language.main.Get("InventoryFull"));
+                return;
             }
+
+            CraftData.AddToInventory(TechType.FireExtinguisher, 1, false, false);
+
+            _hasTank = false;
+            _tankMesh.SetActive(false);
+            gameObject.GetComponent<FireExtinguisher>().fuel = _fuel;
         }
 
         /// <summary>
@@ -140,20 +198,16 @@ namespace MAC.FireExtinguisherHolder.Mono
         {
             IsConstructed = constructed;
 
-            if (!_initialized)
-            {
-                if (!FindComponents())
-                {
-                    _initialized = false;
-                    return;
-                }
-                _tankMesh.SetActive(_hasTank);
-                _initialized = true;
-            }
-
             if (constructed)
             {
-
+                if (isActiveAndEnabled)
+                {
+                    Setup();
+                }
+                else
+                {
+                    _runStartUpOnEnable = true;
+                }
             }
         }
         #endregion
@@ -187,25 +241,7 @@ namespace MAC.FireExtinguisherHolder.Mono
 
         public void OnProtoDeserialize(ProtobufSerializer serializer)
         {
-            QuickLogger.Info("Loading FEExtinguishers");
-            var prefabIdentifier = GetComponent<PrefabIdentifier>();
-            var id = prefabIdentifier?.Id ?? string.Empty;
-            var data = Mod.GetSaveData(id);
-
-            if (data == null) return;
-
-            _fuel = data.Fuel;
-            _hasTank = data.HasTank;
-
-            if (_tankMesh != null)
-            {
-                StartCoroutine(ShowTank(data));
-            }
-            else
-            {
-                QuickLogger.Error("Tank Mesh Not Found");
-            }
-            QuickLogger.Info("Loaded FEExtinguishers");
+            _fromSave = true;
         }
         #endregion
     }

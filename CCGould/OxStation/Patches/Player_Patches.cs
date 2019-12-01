@@ -46,8 +46,12 @@ namespace MAC.OxStation.Patches
                 if (Player.main.oxygenMgr.GetOxygenAvailable() < Player.main.oxygenMgr.GetOxygenCapacity())
                 {
                     var amount = _oxygenPerSecond * Time.deltaTime;
-                    Player.main.oxygenMgr.AddOxygen(amount);
-                    baseUnit.OxygenManager.RemoveOxygen(amount);
+                    var result = baseUnit.OxygenManager.RemoveOxygen(amount);
+
+                    if (result)
+                    {
+                        Player.main.oxygenMgr.AddOxygen(amount);
+                    }
                     canBreathe = true;
                 }
                 break;

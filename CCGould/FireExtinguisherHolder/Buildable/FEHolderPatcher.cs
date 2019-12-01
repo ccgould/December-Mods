@@ -74,7 +74,7 @@ namespace MAC.FireExtinguisherHolder.Buildable
                 var constructable = _prefab.GetOrAddComponent<Constructable>();
                 constructable.allowedOnWall = true;
                 constructable.allowedOnGround = false;
-                constructable.allowedInSub = QPatch.Configuration.Config.AllowInCyclops;
+                constructable.allowedInSub = QPatch.Configuration.AllowInCyclops;
                 constructable.allowedInBase = true;
                 constructable.allowedOnCeiling = false;
                 constructable.allowedOutside = false;

@@ -12,7 +12,7 @@ namespace MAC.OxStation.Managers
         private OxStationController _mono;
         private SubRoot _habitat;
         private PowerRelay _connectedRelay = null;
-        private float EnergyConsumptionPerSecond { get; set; } = QPatch.Configuration.Config.EnergyPerSec;
+        private float EnergyConsumptionPerSecond { get; set; } = QPatch.Configuration.EnergyPerSec;
         private float AvailablePower => this.ConnectedRelay.GetPower();
 
         private PowerRelay ConnectedRelay

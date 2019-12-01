@@ -24,17 +24,61 @@ namespace MAC.OxStation.Mono
         internal AudioManager AudioManager;
         private SaveDataEntry _saveData;
         private bool _initialized;
+        private Coroutine _powerStateCoroutine;
+        private Coroutine _healthCheckCoroutine;
+        private Coroutine _generateOxygenCoroutine;
+        private bool _fromSave;
+        private bool _runStartUpOnEnable;
         internal int IsRunningHash { get; set; }
+
+        private void OnEnable()
+        {
+            if (!_runStartUpOnEnable) return;
+
+            Setup();
+
+            if (_fromSave)
+            {
+                QuickLogger.Info($"Loading {Mod.FriendlyName}");
+                var prefabIdentifier = GetComponent<PrefabIdentifier>();
+                var id = prefabIdentifier?.Id ?? string.Empty;
+                var data = Mod.GetSaveData(id);
+
+                if (data == null)
+                {
+                    QuickLogger.Info($"No save found for PrefabId {id}");
+                    return;
+                }
+
+                HealthManager.SetHealth(data.HealthLevel);
+                OxygenManager.SetO2Level(data.OxygenLevel);
+
+                _fromSave = false;
+
+                QuickLogger.Info($"Loaded {Mod.FriendlyName}");
+            }
+        }
 
         private void Initialize()
         {
             QuickLogger.Debug("Initializing");
+
+            AddToBaseManager();
+
+            var playerInterationManager = gameObject.GetComponent<PlayerInteractionManager>();
+
+            if (playerInterationManager != null)
+            {
+                playerInterationManager.Initialize(this);
+            }
+
+
             if (OxygenManager == null)
             {
                 OxygenManager = new Ox_OxygenManager();
-                OxygenManager.SetAmountPerSecond(QPatch.Configuration.Config.OxygenPerSecond);
+                OxygenManager.SetAmountPerSecond(QPatch.Configuration.OxygenPerSecond);
                 OxygenManager.Initialize(this);
-                StartCoroutine(GenerateOxygen());
+                _generateOxygenCoroutine = StartCoroutine(GenerateOxygen());
             }
 
             if (HealthManager == null)
@@ -44,7 +88,7 @@ namespace MAC.OxStation.Mono
                 HealthManager.SetHealth(100);
                 HealthManager.OnDamaged += OnDamaged;
                 HealthManager.OnRepaired += OnRepaired;
-                StartCoroutine(HealthCheck());
+                _healthCheckCoroutine = StartCoroutine(HealthCheck());
             }
 
             if (PowerManager == null)
@@ -52,7 +96,7 @@ namespace MAC.OxStation.Mono
                 PowerManager = new PowerManager();
                 PowerManager.Initialize(this);
                 PowerManager.OnPowerUpdate += OnPowerUpdate;
-                StartCoroutine(UpdatePowerState());
+                _powerStateCoroutine = StartCoroutine(UpdatePowerState());
             }
 
             if (AudioManager == null)
@@ -68,6 +112,15 @@ namespace MAC.OxStation.Mono
             {
                 QuickLogger.Error($"Animation Manager was not found");
             }
+
+            AnimationManager.SetBoolHash(IsRunningHash, true);
+
+            if (DisplayManager == null)
+            {
+                DisplayManager = gameObject.AddComponent<Managers.DisplayManager>();
+                DisplayManager.Setup(this);
+            }
+
 
             QuickLogger.Debug("Initialized");
             _initialized = true;
@@ -124,7 +177,7 @@ namespace MAC.OxStation.Mono
 
         internal void AddToBaseManager(BaseManager managers = null)
         {
-            SubRoot = GetComponentInParent<SubRoot>();
+            SubRoot = GetComponentInParent<SubRoot>() ?? GetComponent<SubRoot>();
 
             if (SubRoot == null) return;
 
@@ -134,7 +187,7 @@ namespace MAC.OxStation.Mono
 
         internal void Save(SaveData newSaveData)
         {
-            var prefabIdentifier = GetComponent<PrefabIdentifier>();
+            var prefabIdentifier = GetComponent<PrefabIdentifier>() ?? GetComponentInParent<PrefabIdentifier>();
             var id = prefabIdentifier.Id;
 
             if (_saveData == null)
@@ -174,33 +227,22 @@ namespace MAC.OxStation.Mono
 
             if (constructed)
             {
-
-                AddToBaseManager();
-
-                if (SubRoot == null)
+                if (isActiveAndEnabled)
                 {
-                    var playerInterationManager = gameObject.GetComponent<PlayerInteractionManager>();
-
-                    if (playerInterationManager != null)
-                    {
-                        playerInterationManager.Initialize(this);
-                    }
-
-                    return;
+                    Setup();
                 }
-
-                if (!_initialized)
+                else
                 {
-                    Initialize();
+                    _runStartUpOnEnable = true;
                 }
+            }
+        }
 
-                AnimationManager.SetBoolHash(IsRunningHash, true);
-
-                if (DisplayManager == null)
-                {
-                    DisplayManager = gameObject.AddComponent<Managers.DisplayManager>();
-                    DisplayManager.Setup(this);
-                }
+        private void Setup()
+        {
+            if (!_initialized)
+            {
+                Initialize();
             }
         }
 
@@ -218,9 +260,10 @@ namespace MAC.OxStation.Mono
 
         private void OnDestroy()
         {
-            StopCoroutine(UpdatePowerState());
-            StopCoroutine(GenerateOxygen());
-            StopCoroutine(HealthCheck());
+            if (!_initialized) return;
+            StopCoroutine(_powerStateCoroutine);
+            StopCoroutine(_generateOxygenCoroutine);
+            StopCoroutine(_healthCheckCoroutine);
             CancelInvoke(nameof(UpdateAudio));
             BaseManager.RemoveBaseUnit(this);
         }
@@ -237,21 +280,7 @@ namespace MAC.OxStation.Mono
 
         public void OnProtoDeserialize(ProtobufSerializer serializer)
         {
-            QuickLogger.Info($"Loading {Mod.FriendlyName}");
-            var prefabIdentifier = GetComponent<PrefabIdentifier>();
-            var id = prefabIdentifier?.Id ?? string.Empty;
-            var data = Mod.GetSaveData(id);
-
-            if (data == null)
-            {
-                QuickLogger.Info($"No save found for PrefabId {id}");
-                return;
-            }
-
-            HealthManager.SetHealth(data.HealthLevel);
-            OxygenManager.SetO2Level(data.OxygenLevel);
-
-            QuickLogger.Info($"Loaded {Mod.FriendlyName}");
+            _fromSave = true;
         }
     }
 }

@@ -16,26 +16,31 @@ namespace MAC.OxStation.Managers
         {
             _mono = mono;
             FillTank();
-            _tankCapacity = QPatch.Configuration.Config.TankCapacity;
+            _tankCapacity = QPatch.Configuration.TankCapacity;
         }
 
         private void FillTank()
         {
-            _o2Level = QPatch.Configuration.Config.TankCapacity;
+            _o2Level = QPatch.Configuration.TankCapacity;
         }
 
         /// <summary>
         /// Removes oxygen from the unit.
         /// </summary>
         /// <param name="getOxygenPerBreath"></param>
-        internal void RemoveOxygen(float getOxygenPerBreath)
+        internal bool RemoveOxygen(float getOxygenPerBreath)
         {
+            if (!_mono.IsConstructed) return false;
+
             float num = Mathf.Min(getOxygenPerBreath, _o2Level);
             _o2Level = Mathf.Max(0f, this._o2Level - num);
             if (_o2Level < 1)
             {
                 _o2Level = 0;
             }
+
+            return true;
+
             QuickLogger.Debug($"Unit Oxygen Level: {_o2Level}");
         }
 
@@ -88,7 +93,7 @@ namespace MAC.OxStation.Managers
 
         public void GivePlayerO2()
         {
-            if (_o2Level <= 0) return;
+            if (_o2Level <= 0 || !_mono.IsConstructed) return;
 
             var o2Manager = Player.main.oxygenMgr;
 
