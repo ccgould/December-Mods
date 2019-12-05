@@ -9,6 +9,7 @@ namespace MAC.DropAllOnDeath.Config
     {
         #region Internal Properties
         internal static string ModName => "DropAllOnDeath";
+        internal static string ModFolderName => $"FCS_{ModName}";
         internal static string MODFOLDERLOCATION => GetModPath();
         internal static ModConfiguration Configuration { get; set; }
         #endregion
@@ -41,7 +42,7 @@ namespace MAC.DropAllOnDeath.Config
         #region Private Methods
         private static string GetModPath()
         {
-            return Path.Combine(GetQModsPath(), ModName);
+            return Path.Combine(GetQModsPath(), ModFolderName);
         }
         private static string GetQModsPath()
         {

@@ -83,11 +83,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Config\mod.json" />
+    <None Include="mod.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="..\Common\Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)bin\$(Configuration)\DropAllOnDeath.dll" "F:\Program Files\Epic Games\Subnautica\QMods\DropAllOnDeath\" /Y /I</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(ProjectDir)bin\$(Configuration)\DropAllOnDeath.dll" "F:\Program Files\Epic Games\Subnautica\QMods\FCS_DropAllOnDeath\" /Y /I
+xcopy "$(ProjectDir)bin\$(Configuration)\mod.json" "F:\Program Files\Epic Games\Subnautica\QMods\FCS_DropAllOnDeath\" /Y /I</PostBuildEvent>
   </PropertyGroup>
 </Project>
