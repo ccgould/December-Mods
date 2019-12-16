@@ -17,7 +17,7 @@ namespace MAC.OxStation.Buildables
         #region Public Overrides
         public override TechGroup GroupForPDA { get; } = TechGroup.ExteriorModules;
         public override TechCategory CategoryForPDA { get; } = TechCategory.ExteriorModule;
-        public override string AssetsFolder { get; } = $"OxStation/Assets";
+        public override string AssetsFolder { get; } = $"{Mod.ModFolderName}/Assets";
         #endregion
 
         #region Private Members
