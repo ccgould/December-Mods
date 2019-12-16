@@ -21,6 +21,7 @@ namespace MAC.SaveVehicleLightState.Configuration
 
         #region Internal Properties
         internal static string ModName => "SaveVehicleLightState";
+        internal static string ModFolderName => "FCS_SaveVehicleLightState";
         internal static string MODFOLDERLOCATION => GetModPath();
         internal static ModConfiguration Configuration { get; set; }
         internal static event Action<SaveData> OnDataLoaded;
@@ -132,7 +133,7 @@ namespace MAC.SaveVehicleLightState.Configuration
         }
         private static string GetModPath()
         {
-            return Path.Combine(GetQModsPath(), ModName);
+            return Path.Combine(GetQModsPath(), ModFolderName);
         }
         private static string GetQModsPath()
         {

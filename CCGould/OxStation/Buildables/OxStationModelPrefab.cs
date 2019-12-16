@@ -16,7 +16,7 @@ namespace MAC.OxStation.Buildables
         private bool GetPrefabs()
         {
             QuickLogger.Debug("GetPrefabs");
-            AssetBundle assetBundle = AssetHelper.Asset(Mod.ModName, Mod.BundleName);
+            AssetBundle assetBundle = AssetHelper.Asset(Mod.ModFolderName, Mod.BundleName);
 
             //If the result is null return false.
             if (assetBundle == null)

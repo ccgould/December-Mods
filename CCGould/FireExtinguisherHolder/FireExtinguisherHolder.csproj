@@ -80,7 +80,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="mod.json" />
+    <None Include="mod.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\FEHolder.png" />
@@ -88,6 +90,7 @@
   <Import Project="..\Common\Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)bin\$(Configuration)\FireExtinguisherHolder.dll" "F:\Program Files\Epic Games\Subnautica\QMods\FEHolder\" /Y /I</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(ProjectDir)bin\$(Configuration)\FireExtinguisherHolder.dll" "F:\Program Files\Epic Games\Subnautica\QMods\FCS_FEHolder\" /Y /I
+xcopy "$(ProjectDir)bin\$(Configuration)\mod.json" "F:\Program Files\Epic Games\Subnautica\QMods\FCS_FEHolder\" /Y /I</PostBuildEvent>
   </PropertyGroup>
 </Project>

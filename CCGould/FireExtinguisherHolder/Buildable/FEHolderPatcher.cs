@@ -5,6 +5,7 @@ using SMLHelper.V2.Crafting;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using MAC.FireExtinguisherHolder.Config;
 using UnityEngine;
 
 namespace MAC.FireExtinguisherHolder.Buildable
@@ -14,7 +15,7 @@ namespace MAC.FireExtinguisherHolder.Buildable
         #region Public Overrides
         public override TechGroup GroupForPDA { get; } = TechGroup.InteriorModules;
         public override TechCategory CategoryForPDA { get; } = TechCategory.InteriorModule;
-        public override string AssetsFolder { get; } = $"FEHolder/Assets";
+        public override string AssetsFolder { get; } = $"{Mod.ModFolderName}/Assets";
         #endregion
 
         #region Private Members

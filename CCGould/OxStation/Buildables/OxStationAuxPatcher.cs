@@ -5,10 +5,10 @@ namespace MAC.OxStation.Buildables
     internal partial class OxStationBuildable
     {
         #region Private Members
-        private const string PowerUsageKey = "MAC_PowerUsage";
-        private const string PerMinuteKey = "MAC_PerMinute";
-        private const string TakeOxygenKey = "MAC_TakeOxygen";
-
+        private const string PowerUsageKey = "OS_PowerUsage";
+        private const string PerMinuteKey = "OS_PerMinute";
+        private const string TakeOxygenKey = "OS_TakeOxygen";
+        private const string BeaconAttachedKey = "OS_BeaconAttached";
         #endregion
 
         #region Internal Properties
@@ -25,6 +25,7 @@ namespace MAC.OxStation.Buildables
             LanguageHandler.SetLanguageLine(PowerUsageKey, "Power Usage");
             LanguageHandler.SetLanguageLine(PerMinuteKey, "per minute");
             LanguageHandler.SetLanguageLine(TakeOxygenKey, "Take Oxygen");
+            LanguageHandler.SetLanguageLine(BeaconAttachedKey, "Remove attached beacon to deconstruct.");
         }
         #endregion
 
@@ -50,5 +51,10 @@ namespace MAC.OxStation.Buildables
             return Language.main.Get("Damaged");
         }
         #endregion
+
+        public static string BeaconAttached()
+        {
+            return Language.main.Get(BeaconAttachedKey);
+        }
     }
 }

@@ -46,6 +46,21 @@ namespace MAC.OxStation.Buildables
                 PrefabIdentifier prefabID = prefab.GetOrAddComponent<PrefabIdentifier>();
                 prefabID.ClassId = this.ClassID;
 
+                var pFX = prefab.AddComponent<PowerFX>();
+                
+                var attachPoint = prefab.FindChild("model").FindChild("static_objects").FindChild("CylinderNull")?.gameObject;
+                
+                if (attachPoint == null)
+                {
+                    QuickLogger.Error("AttachPoint CylinderNull was not found on the Oxstation model");
+                }
+                else
+                {
+                    pFX.attachPoint = attachPoint.transform;
+                }
+
+                prefab.AddComponent<PowerManager>();
+                prefab.AddComponent<PowerRelay>();
                 prefab.AddComponent<AnimationManager>();
                 prefab.AddComponent<OxStationController>();
 

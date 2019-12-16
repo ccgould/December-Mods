@@ -17,6 +17,7 @@ namespace MAC.OxStation.Config
 
         #region Internal Properties
         internal static string ModName => "OxStation";
+        internal static string ModFolderName => "FCS_OxStation";
         internal static string BundleName => "oxstationmodbundle";
 
         internal const string SaveDataFilename = "OxStationSaveData.json";
@@ -118,7 +119,7 @@ namespace MAC.OxStation.Config
 
         private static string GetModPath()
         {
-            return Path.Combine(GetQModsPath(), ModName);
+            return Path.Combine(GetQModsPath(), ModFolderName);
         }
         private static string GetQModsPath()
         {

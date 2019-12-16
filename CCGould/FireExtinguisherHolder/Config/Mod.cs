@@ -20,6 +20,7 @@ namespace MAC.FireExtinguisherHolder.Config
 
         #region Internal Properties
         internal static string ModName => "FEHolder";
+        internal static string ModFolderName => $"FCS_{ModName}";
         internal static string BundleName => "feholdermodbundle";
 
         internal const string SaveDataFilename = "FEHolderSaveData.json";
@@ -118,7 +119,7 @@ namespace MAC.FireExtinguisherHolder.Config
 
         private static string GetModPath()
         {
-            return Path.Combine(GetQModsPath(), ModName);
+            return Path.Combine(GetQModsPath(), ModFolderName);
         }
         private static string GetQModsPath()
         {

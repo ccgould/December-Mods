@@ -1,7 +1,7 @@
 {
   "Id": "FireExtinguisherHolder",
   "DisplayName": "Fire Extinguisher Holder",
-  "Author": "MAC",
+  "Author": "FCStudios",
   "Version": "1.0.0",
   "Enable": true,
   "AssemblyName": "FireExtinguisherHolder.dll",

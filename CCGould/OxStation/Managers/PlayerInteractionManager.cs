@@ -1,5 +1,6 @@
 ﻿using MAC.OxStation.Config;
 using MAC.OxStation.Mono;
+using UnityEngine.UI;
 
 namespace MAC.OxStation.Managers
 {
@@ -14,16 +15,30 @@ namespace MAC.OxStation.Managers
         }
         public void OnHandHover(GUIHand hand)
         {
-            if (_mono == null || _mono.SubRoot != null) return;
+            if (_mono == null) return;
 
-            HandReticle main = HandReticle.main;
-            main.SetIcon(HandReticle.IconType.Default);
-            main.SetInteractText($"{Mod.FriendlyName} cannot operate without being placed on a platform.", false, HandReticle.Hand.None);
+            if(ShowBeaonMessage())
+            {
+                HandReticle main = HandReticle.main;
+
+                //var f = uGUI.FormatButton(GameInput.Button.RightHand, false, " / ", false);
+
+                main.SetIcon(HandReticle.IconType.Hand);
+                main.SetInteractText($"Click to attach beacon",false, HandReticle.Hand.Right); 
+
+                //main.SetInteractText($"{Mod.FriendlyName} cannot operate without being placed on a platform.", false, HandReticle.Hand.None);
+            }
         }
 
         public void OnHandClick(GUIHand hand)
         {
             //Not needed for this mod
+        }
+
+        private bool ShowBeaonMessage()
+        {
+            if (_mono == null) return false;
+            return (!_mono.IsBeaconAttached() && Inventory.main.GetHeldTool() && Inventory.main.GetHeldTool().pickupable.GetTechType() == TechType.Beacon);
         }
     }
 }

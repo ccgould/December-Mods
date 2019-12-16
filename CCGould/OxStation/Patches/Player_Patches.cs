@@ -32,11 +32,10 @@ namespace MAC.OxStation.Patches
                 return false;
             }
 
+            //Check if the player oxygen level is full
             if (__instance.oxygenMgr.GetOxygenAvailable() >= __instance.oxygenMgr.GetOxygenCapacity())
             {
-                QuickLogger.Debug($"Can Breathe Check 2 {canBreathe}", true);
-                __result = canBreathe;
-                return false;
+                return true;
             }
 
             foreach (OxStationController baseUnit in manager.BaseUnits)

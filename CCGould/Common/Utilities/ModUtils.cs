@@ -31,11 +31,17 @@ namespace Common.Utilities
 
         public static void LoadSaveData<TSaveData>(string fileName, string saveDirectory, Action<TSaveData> onSuccess) where TSaveData : new()
         {
-            var save = File.ReadAllText(Path.Combine(saveDirectory, fileName));
-            var jsonSerializerSettings = new JsonSerializerSettings();
-            jsonSerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
-            var json = JsonConvert.DeserializeObject<TSaveData>(save, jsonSerializerSettings);
-            onSuccess?.Invoke(json);
+            var filePath = Path.Combine(saveDirectory, fileName);
+            
+            if (File.Exists(filePath))
+            {
+                var save = File.ReadAllText(filePath);
+                var jsonSerializerSettings = new JsonSerializerSettings();
+                jsonSerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
+                var json = JsonConvert.DeserializeObject<TSaveData>(save, jsonSerializerSettings);
+                onSuccess?.Invoke(json);
+            }
+
         }
 
         private static Coroutine StartCoroutine(IEnumerator coroutine)
