@@ -15,6 +15,7 @@ namespace MAC.ScubaManifold
         public static void Patch()
         {
             new ScubaManifoldItem().Patch();
+            Console.WriteLine("[ScubaManifold] [INFO] Patched!");
         }
     }
 
