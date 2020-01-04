@@ -6,15 +6,17 @@ using Oculus.Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Reflection;
+using QModManager.API.ModLoading;
 
 namespace MAC.OxStation
 {
 
-
+    [QModCore]
     public static class QPatch
     {
         internal static Configuration Configuration { get; set; }
 
+        [QModPatch]
         public static void Patch()
         {
             QuickLogger.Info("Started patching. Version: " + QuickLogger.GetAssemblyVersion());

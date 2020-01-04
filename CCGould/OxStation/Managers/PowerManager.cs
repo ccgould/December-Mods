@@ -22,7 +22,7 @@ namespace MAC.OxStation.Managers
 
             if (_mono.PowerRelay != null)
             {
-                return _mono.PowerRelay.GetPower();
+                return _useInbound ? _mono.PowerRelay.GetPowerFromInbound() : _mono.PowerRelay.GetPower();
             }
 
             return power;
@@ -34,7 +34,7 @@ namespace MAC.OxStation.Managers
             set
             {
                 _powerState = value; 
-                //QuickLogger.Debug($"Current PowerState: {value}");
+                QuickLogger.Debug($"Current PowerState: {value}");
                 OnPowerUpdate?.Invoke(value);
             }
         }
@@ -44,6 +44,7 @@ namespace MAC.OxStation.Managers
         private float _energyToConsume;
         private Coroutine _relayCoroutine;
         private bool _checkingForRelay;
+        private bool _useInbound;
 
         internal void Initialize(OxStationController mono)
         {
@@ -60,6 +61,7 @@ namespace MAC.OxStation.Managers
                     QuickLogger.Debug("PowerRelay found at last!", true);
                 }
                 _mono.PowerRelay.dontConnectToRelays = true;
+                _useInbound = true;
             }
         }
 
@@ -71,7 +73,9 @@ namespace MAC.OxStation.Managers
                 return;
             }
 
-            if (_mono.PowerRelay.GetPower() >= EnergyConsumptionPerSecond)
+            var power = _useInbound ? _mono.PowerRelay.GetPowerFromInbound() : _mono.PowerRelay.GetPower();
+
+            if (power >= EnergyConsumptionPerSecond)
             {
                 SetPowerStates(PowerStates.Powered);
                 return;

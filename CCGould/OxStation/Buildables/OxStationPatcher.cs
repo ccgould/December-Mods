@@ -24,7 +24,7 @@ namespace MAC.OxStation.Buildables
         private static readonly OxStationBuildable Singleton = new OxStationBuildable();
         #endregion
 
-        #region Contructor
+        #region Constructor
         public OxStationBuildable() : base(Mod.ClassID, Mod.FriendlyName, Mod.Description)
         {
             OnFinishedPatching += AdditionalPatching;
